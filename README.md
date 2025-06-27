@@ -29,4 +29,4 @@ Run the following command
 python manage.py createsuperuser
 ```
 
-After running the above command, you will be redirected to the login page
+After running the above command, you will be redirected to the login page! You can create the super user here
