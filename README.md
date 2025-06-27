@@ -1,6 +1,6 @@
 # Pricing Django Based
 
-Pricing Django Based
+Pricing Django-Based Application
 
 ## Run Server
 
