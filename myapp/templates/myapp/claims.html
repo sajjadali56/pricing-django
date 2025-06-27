@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims File Upload</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        form {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+
+        header {
+            width: 100%;
+            height: 100px; /* Adjust based on your logo size */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Logo on one side, name on the other */
+            padding: 0 20px; /* Padding on the sides */
+            background-color: #fff; /* Adjust background color as needed */
+            {% comment %} box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */ {% endcomment %}
+        }
+
+        .logo {
+            height: 280px; /* Adjust based on your logo size */
+            background-image: url('{% static "badri.png" %}');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 280px; /* Ensure this is equal to height for a square logo */
+        }
+        h1, h2 {
+            color: #0044CC; /* Blue color for headers */
+            border-bottom: 1px solid #FFD700; /* Yellow border */
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        form {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+        .form-errors {
+            color: red;
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        select, input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+         button {
+            background-color: #007BFF; /* Blue background for buttons */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #3d5ba9;
+        }
+        fieldset {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        legend {
+            padding: 0 5px;
+            font-weight: bold;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+            background-color: #fff;
+            text-align: left;
+        }
+    
+        input[type="file"]::file-selector-button {
+            color: #FFF;
+            background-color: #E8A317; /* Blue background */
+            border: none;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+    
+        input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .uploaded-files-info {
+            font-family: Arial, sans-serif;
+            border: 2px solid #4A90E2; /* a soft blue border */
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #E8F0FE; /* a very light blue background */
+        }
+        
+        .uploaded-files-info legend {
+            padding: 0 10px;
+            color: #333;
+            font-weight: bold;
+            background-color: #E8F0FE; /* matching the fieldset background */
+            border-bottom: 1px solid #4A90E2; /* a line under the legend for visual separation */
+        }
+        
+        .uploaded-files-info p {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .uploaded-files-info ul {
+            list-style: none;
+            padding-left: 20px; /* Indent the list a bit */
+            margin-top: 0;
+        }
+        
+        .uploaded-files-info ul li {
+            background-color: #FFFFFF; /* white background for list items */
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+            transition: background-color 0.3s; /* smooth transition for hover effect */
+            font-size: 0.9em;
+        }
+        
+        .uploaded-files-info ul li:hover {
+            background-color: #DDEFFF; /* a slightly different blue on hover */
+        }
+        #twoColumnsSection {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: #f9f9f9;
+}
+
+#search_input_two_columns {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Selected Values Styling - Adjusted sizes and hover color */
+#selected_values_container_two_columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Reduced gap */
+    margin-top: 10px;
+}
+
+.selected-value {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px; /* Reduced padding for smaller size */
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 15px; /* Adjusted for smaller size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px; /* Reduced font size */
+}
+
+.selected-value:hover {
+    background-color: #ff0000; /* Changed hover background color to red */
+}
+
+/* Loading Indicator */
+#loading_two_columns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* General enhancements */
+datalist {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+option {
+    padding: 8px;
+    cursor: pointer;
+}
+
+input[list]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+        
+.tab {
+    overflow: hidden;
+    background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+    border-bottom: 3px solid #FBD185; /* Golden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tab button, .tab a {
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 16px 20px;
+    font-size: 18px;
+    background-color: inherit;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.tab button:hover, .tab a:hover {
+    background-color: #FBD185; /* Golden */
+    color: #0567a6; /* Blue text */
+}
+
+.tab button.active, .tab a.active {
+    background-color: #034d7a; /* Darker shade */
+    color: #FBD185; /* Golden text */
+}
+.radio-container {
+    display: flex; /* Aligns the items (labels and radio buttons) in a row */
+    align-items: center; /* Centers the items vertically */
+    gap: 15px; /* Creates space between each label */
+}
+    </style>
+</head>
+
+<body>
+    <div class="tab">
+        <a href="{% url 'display_results' %}" class="display-results">Premium Results</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">Claims Results</a>
+        <a href="{% url 'display_os_results' %}" class="display-os-results">OS Results</a>
+        <a href="{% url 'upload_and_display' %}" class="upload">Upload Premium Files</a>
+        <a href="{% url 'claims_file_upload' %}" class="claims-button">Upload Claims Files</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">Upload OS Files</a>
+        <a href="{% url 'upload_mapping' %}" class="upload_mapping">Mapping Section</a>
+        <a href="{% url 'mapping_upload' %}" class="mapping_upload">UAE NAMING</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">→></a>
+
+    </div>
+    <header>
+        <div class="logo"></div>
+    </header>
+    <h1>Claims File Upload</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    
+    <form method="post" enctype="multipart/form-data" action="{% url 'claims_file_upload' %}" id="claimsForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.errors %}
+            <div class="form-errors">
+                Please correct the following errors: {{ form.errors }}
+            </div>
+        {% endif %}
+        <button type="submit">Merge and Upload Files</button>
+
+        {% if is_merged %}
+            <br>
+            <fieldset class="uploaded-files-info">
+                <legend>Uploaded Files Information</legend>
+                <p>Number of files merged: {{ file_details|length }}</p>
+                <p>Total number of entries: {{ total_entries }}</p>
+                <p>File names and entries:</p>
+                <ul>
+                    {% for file in file_details %}
+                    <li>{{ file.name }} - {{ file.entries }} entries</li>
+                    {% endfor %}
+                </ul>
+            </fieldset>
+            {% comment %} <fieldset>
+                <div>
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" name="startDate">
+                </div>
+                <div>
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate">
+                </div>
+            </fieldset> {% endcomment %}
+            <fieldset>
+                <legend>Is claimId available?</legend>
+                <div class="radio-container">
+                <label>
+                    <input type="radio" name="claimId_available" value="yes" id="claimIdYes">
+                    Yes
+                </label>
+                <label>
+                    <input type="radio" name="claimId_available" value="no" id="claimIdNo" checked>
+                    No
+                </label>
+                <div>
+            </fieldset>
+
+            <!-- Fields for Yes and No options -->
+            <!-- Make sure to include them within the form so they are submitted properly -->
+
+            <div id="fieldsForYes" style="display: none;">
+                <label>ClaimID:
+                    <select name="CLAIMID">
+                        {% for column in columns %}
+                            <option value="{{ column }}" >{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <p>UID SELECTION</p>
+                <div class="radio-container">
+                <label><input type="radio" name="selection" value="yes" onclick="toggleDisplay_yes(true)"> Yes</label>
+                <label><input type="radio" name="selection" value="no" onclick="toggleDisplay_yes(false)"> No</label>
+                </div>
+
+                <!-- Section for UID selection, initially hidden -->
+                <div id="uidSection_yes" style="display: none;">
+                    <p>UID:</p>
+                    <select name="UID1">
+                        <!-- Dynamically generated options from the server -->
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                </div>
+
+                <!-- Section for selecting two columns, initially hidden -->
+                <div id="twoColumnsSection_yes" style="display: none;">
+                    <p>SELECT COLUMNS FOR UID:</p>
+                    <input type="text" id="search_input_two_columns" list="unique_values_datalist_two_columns" placeholder="Search and select a value...">
+                    <datalist id="unique_values_datalist_two_columns">
+                        <!-- Options will be dynamically added by JavaScript -->
+                    </datalist>
+
+                    <!-- Container for selected values -->
+                    <div id="selected_values_container_two_columns"></div>
+                </div>
+
+
+                {% comment %} UID:
+                <select name="UID1">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br> {% endcomment %}
+
+
+                LOSS DATE:
+                <select name="LOSS_DATE1">
+                    
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                CLAIM TYPE:
+                <select name="CLAIM_TYPE1">
+                    
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                {% comment %} <br>
+                CLAIM AMOUNT:
+                <select name="CLAIM_AMOUNT1">
+                    
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br> {% endcomment %}
+                <br>
+                CLAIM AMOUNT 1:
+                <select name="CLAIM_AMOUNT11">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                Operator:
+                <select name="OPERATOR">
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                </select>
+                <br>
+                CLAIM AMOUNT 2:
+                <select name="CLAIM_AMOUNT22">
+                    {% comment %} <option value="None" selected>{{'None'}}</option> {% endcomment %}
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for="date_separator">Choose a date separator:</label>
+                <select id="date_separator" name="date_separator" onchange="updateDateFormats();">
+                    <option value="-">Dash (-)</option>
+                    <option value="/">Slash (/)</option>
+                </select>
+
+                <!-- HTML for selecting date format -->
+                <label for="date_format">Choose a date format:</label>
+                <select id="date_format" name="date_format">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+    
+    
+                <!-- More dropdowns for 'Yes' selection -->
+            </div>
+            <br>
+    
+            <div id="fieldsForNo">
+                <p>UID SELECTION</p>
+                <div class="radio-container">
+                <label><input type="radio" name="selection" value="yes" onclick="toggleDisplay(true)"> Yes</label>
+                <label><input type="radio" name="selection" value="no" onclick="toggleDisplay(false)"> No</label>
+                </div>
+
+                <!-- Section for UID selection, initially hidden -->
+                <div id="uidSection" style="display: none;">
+                    <p>UID:</p>
+                    <select name="UID">
+                        <!-- Dynamically generated options from the server -->
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                </div>
+
+                <!-- Section for selecting two columns, initially hidden -->
+                <div id="twoColumnsSection" style="display: none;">
+                    <p>SELECT COLUMNS FOR UID:</p>
+                    <input type="text" id="search_input_two_columns" list="unique_values_datalist_two_columns" placeholder="Search and select a value...">
+                    <datalist id="unique_values_datalist_two_columns">
+                        <!-- Options will be dynamically added by JavaScript -->
+                    </datalist>
+
+                    <!-- Container for selected values -->
+                    <div id="selected_values_container_two_columns"></div>
+
+                    <!-- A hidden div for showing a loading indicator (optional) -->
+                    <div id="loading_two_columns" style="display: none;">Loading...</div>
+
+                    <!-- Include CSRF token in the template for POST requests -->
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                </div>
+
+                <br>
+                LOSS DATE:
+                <select name="LOSS_DATE">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                CLAIM TYPE:
+                <select name="CLAIM_TYPE">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                CLAIM AMOUNT 1:
+                <select name="CLAIM_AMOUNT1">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                OPERATOR:
+                <select name="OPERATOR1">
+                        {% comment %} <option value="None" selected>{{'None'}}</option> {% endcomment %}
+                        <option value="+">{{'+'}}</option>
+                        <option value="-">{{'-'}}</option>
+                </select>
+                <br>
+                CLAIM AMOUNT 2:
+                <select name="CLAIM_AMOUNT2">
+                    {% comment %} <option value="None" selected>{{'None'}}</option> {% endcomment %}
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+
+                <!-- More dropdowns for 'No' selection -->
+                <label for="date_separator">Choose a date separator:</label>
+                <select id="date_separator" name="date_separator" onchange="updateDateFormats();">
+                    <option value="-">Dash (-)</option>
+                    <option value="/">Slash (/)</option>
+                </select>
+
+                <!-- HTML for selecting date format -->
+                <label for="date_format">Choose a date format:</label>
+                <select id="date_format" name="date_format">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+                <fieldset>
+                    <legend>Choose GroupBy Format:</legend>
+                    <label>
+                        <input type="radio" id="UL" name="identifier_format" value="UL" checked>
+                        GroupBy Using: UID & LossDate
+                    </label>
+                    <label>
+                        <input type="radio" id="ULC" name="identifier_format" value="ULC">
+                        GroupBy Using: UID & LossDate & ClaimType
+                    </label>
+                </fieldset>
+            </div>
+            <button type="submit" id="processDataButton" name="submit_type" value="process_data">Process Data</button>
+        {% endif %}
+    </form>
+
+    {% if data_processed %}
+        <p>Data has been processed successfully!</p>
+        <a href="{% url 'download_processed_data' %}">Download Processed Data</a>
+    {% endif %}
+
+    <script>
+        function toggleDisplay_yes(isYesSelected) {
+            // Display the UID dropdown if "Yes" is selected
+            document.getElementById('uidSection_yes').style.display = isYesSelected ? 'block' : 'none';
+            // Display the two columns selection if "No" is selected
+            document.getElementById('twoColumnsSection_yes').style.display = isYesSelected ? 'none' : 'block';
+        }
+
+        function toggleDisplay(isYesSelected) {
+            // Display the UID dropdown if "Yes" is selected
+            document.getElementById('uidSection').style.display = isYesSelected ? 'block' : 'none';
+            // Display the two columns selection if "No" is selected
+            document.getElementById('twoColumnsSection').style.display = isYesSelected ? 'none' : 'block';
+        }
+        function fetchColumnData() {
+            const loadingElement = document.getElementById('loading_two_columns');
+            const dataList = document.getElementById('unique_values_datalist_two_columns');
+        
+            // Show loading message
+            loadingElement.style.display = 'block';
+        
+            // Fetch the unique values from the server
+            fetch(`/myapp/get_columns/`) // The URL to your Django view that returns column values
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate the datalist with the column data
+                    dataList.innerHTML = "";
+                    data.columns.forEach(value => {
+                        let option = document.createElement("option");
+                        option.value = value;
+                        dataList.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching column data:", error);
+                })
+                .finally(() => {
+                    // Hide loading message
+                    loadingElement.style.display = 'none';
+                });
+        }
+        
+        // Function to handle the update of selected values
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchColumnData(); // Assuming this function populates the datalist options
+        
+            const searchInput = document.getElementById("search_input_two_columns");
+            const dataList = document.getElementById("unique_values_datalist_two_columns");
+            const selectedValuesContainer = document.getElementById("selected_values_container_two_columns");
+        
+            searchInput.addEventListener("input", function(event) {
+                let inputValue = event.target.value.trim();
+        
+                // Check if the inputValue matches any of the datalist options
+                let isOptionMatch = Array.from(dataList.options).some(option => option.value === inputValue);
+        
+                // Only add if it's a matching option and not already selected
+                if (inputValue && isOptionMatch && !document.querySelector(`[data-value="${inputValue}"]`)) {
+                    let div = document.createElement("div");
+                    div.setAttribute("class", "selected-value");
+                    div.setAttribute("data-value", inputValue);
+                    div.textContent = inputValue + " (Click to remove)";
+                    div.addEventListener("click", function() {
+                        this.remove();
+                        updateSelectedValues(); // Update selected values after removal
+                    });
+                    selectedValuesContainer.appendChild(div);
+                    updateSelectedValues(); // Update selected values after adding a new item
+                    searchInput.value = ""; // Clear the input for a new selection
+                }
+            });
+        });
+        
+        function updateSelectedValues() {
+            let selectedDivs = document.querySelectorAll("#selected_values_container_two_columns .selected-value");
+            let selectedValues = Array.from(selectedDivs).map(div => div.getAttribute("data-value"));
+            console.log("Selected Values:", selectedValues);
+            // Additional code to handle the selected values can be added here
+            fetch(`/myapp/handle_selected_values/`, { // Update this URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector("[name=csrfmiddlewaretoken]").value
+                },
+                body: JSON.stringify({ 'selectedValues': selectedValues })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Handle response data from the server
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        
+        // Call this function when you need to clear the inner HTML of the div
+        
+        // Show or hide fields based on claimId radio selection
+        document.getElementById('claimIdYes').addEventListener('change', function() {
+            document.getElementById('fieldsForYes').style.display = 'block';
+            document.getElementById('fieldsForNo').style.display = 'none';
+            
+        });
+
+        document.getElementById('claimIdNo').addEventListener('change', function() {
+            document.getElementById('fieldsForYes').style.display = 'none';
+            document.getElementById('fieldsForNo').style.display = 'block';
+            
+        });
+
+        // Change the form action when the 'Process Data' button is clicked
+        document.getElementById('processDataButton').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent the default form submit
+            var form = document.getElementById('claimsForm');
+            form.action = "{% url 'process_claims_data' %}";
+            form.submit();
+        });
+        function updateDateFormats() {
+            var separators = document.getElementsByName('date_separator');
+            separators.forEach(function(separatorSelect) {
+                var separator = separatorSelect.value;
+                var dateFormatSelect = separatorSelect.closest('div').querySelector('[name="date_format"]');
+                dateFormatSelect.innerHTML = ''; // Clear existing options
+                
+                var formats = [
+                    'dd' + separator + 'mm' + separator + 'yy',
+                    'mm' + separator + 'dd' + separator + 'yy',
+                    'dd' + separator + 'mm' + separator + 'yyyy',
+                    'mm' + separator + 'dd' + separator + 'yyyy',
+                    'yy' + separator + 'mm' + separator + 'dd',
+                    'yyyy' + separator + 'mm' + separator + 'dd'
+                ];
+                
+                formats.forEach(function(format) {
+                    var option = document.createElement('option');
+                    option.value = format;
+                    option.text = format.toUpperCase();
+                    dateFormatSelect.appendChild(option);
+                });
+            });
+        }
+        
+        window.onload = function() {
+            updateDateFormats();
+            // Any other page initialization code
+        };
+        
+        
+
+    </script>
+</body>
+
+
+
+
+</html>

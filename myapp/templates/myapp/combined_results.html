@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #0567a6; /* Blue heading */
+        }
+
+        ul {
+            list-style-type: none; /* Remove bullets from list */
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            border: 1px solid #ced4da; /* Light gray border */
+            background-color: #fff; /* White background */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        p {
+            margin-top: 10px;
+            color: #6c757d; /* Gray text */
+        }
+
+        .data-frame {
+            margin-top: 20px;
+            border: 1px solid #ced4da; /* Light gray border */
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
+
+        .data-frame table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-frame th, .data-frame td {
+            border: 1px solid #ddd; /* Light gray border */
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data-frame th {
+            background-color: #0567a6; /* Blue header background */
+            color: #fff; /* White text */
+        }
+
+        .data-frame tr:nth-child(even) {
+            background-color: #f2f2f2; /* Alternate row background */
+        }
+
+        .data-frame tr:hover {
+            background-color: #e2e6ea; /* Hover effect */
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0567a6; /* Blue background */
+            color: #fff; /* White text */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s; /* Smooth hover effect */
+        }
+
+        .btn-primary:hover {
+            background-color: #034d7a; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <button class="tablinks" onclick="goBack()">Home</button>
+        <a href="#" class="tablinks" id="premium-checks-button">Premium Checks</a>
+        <a href="{% url 'display_results' %}" class="display-results">Premium Results</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">Claims Results</a>
+        <a href="{% url 'display_os_results' %}" class="display-os-results">OS Results</a>
+        <a href="{% url 'upload_and_display' %}" class="upload">Upload Premium Files</a>
+        <a href="{% url 'claims_file_upload' %}" class="claims-button">Upload Claims Files</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">Upload OS Files</a>
+        <a href="{% url 'combined_results' %}" class="fina;-button">View Combined Results</a>
+    </div>
+    <!-- Display Premium Results -->
+    <h2>Premium Results</h2>
+    {% if premium_results %}
+        <div class="data-frame">
+            <h3>PREMIUM RESULTS</h3>
+            {% if premium_results.dataframe %}
+                {{ premium_results.dataframe|safe }}
+                {% if premium_results.show_download_link %}
+                <br>
+                <a href="{% url 'download_csv2' %}" class="btn btn-primary">Download CSV</a>
+                {% endif %}
+            {% else %}
+                <p>No Data Frame HTML available for Premium Results.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>No Premium Results available.</p>
+    {% endif %}
+    
+    <!-- Display Claims Results -->
+    <h2>Claims Results</h2>
+    {% if claims_results %}
+        <ul>
+            {% for result in claims_results %}
+                <li>{{ result.attribute_name }}</li> <!-- Access inner attribute here -->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Claims Results available.</p>
+    {% endif %}
+    
+    <!-- Display OS Results -->
+    <h2>OS Results</h2>
+    {% if os_results %}
+        <ul>
+            {% for result in os_results %}
+                <li>{{ result.attribute_name }}</li> <!-- Access inner attribute here -->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No OS Results available.</p>
+    {% endif %}
+    
+    
+</body>
+</html>

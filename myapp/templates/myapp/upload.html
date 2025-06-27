@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            height: 100px; /* Adjust based on your logo size */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Logo on one side, name on the other */
+            padding: 0 20px; /* Padding on the sides */
+            background-color: #fff; /* Adjust background color as needed */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+
+        .logo {
+            height: 280px; /* Adjust based on your logo size */
+            background-image: url('{% static "badri1.png" %}');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 280px; /* Ensure this is equal to height for a square logo */
+        }
+
+        .header-content {
+            color: white; /* Adjust text color as needed */
+            text-align: center;
+        }
+    
+        h1, h2 {
+            color: #0044CC; /* Blue color for headers */
+            border-bottom: 1px solid #FFD700; /* Yellow border */
+            padding-bottom: 10px;
+            text-align: center;
+            margin-top: 70px
+        }
+    
+        form {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 750px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+    
+        button {
+            background-color: #007BFF; /* Blue background for buttons */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        select, input[type="text"], input[type="file"], datalist {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        input[type="file"]::file-selector-button {
+            color: #FFF;
+            background-color: #007BFF; /* Blue background */
+            border: none;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+            text-align: left;
+        }
+    
+        input[type="radio"] {
+            margin: 0 5px 0 0;
+        }
+    
+        #loading {
+            color: #FF0000; /* Red color for loading text */
+            font-weight: bold;
+            text-align: center;
+        }
+    
+        #selected_values_container div, #additional_fields_container div {
+            display: inline-block;
+            background-color: #EEE; /* Light grey background */
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        #selected_values_container div:hover, #additional_fields_container div:hover {
+            background-color: #DDD;
+        }
+    
+        .claims-button {
+            display: block;
+            width: max-content;
+            background-color: #FFD700; /* Yellow background for Claims tab */
+            color: #FFFFFF; /* White text color */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none; /* Remove underline from link */
+        }
+    
+        .claims-button:hover {
+            background-color: #FFC107; /* Slightly darker yellow on hover */
+        }
+        .uploaded-files-info {
+            font-family: Arial, sans-serif;
+            border: 2px solid #4A90E2; /* a soft blue border */
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #E8F0FE; /* a very light blue background */
+        }
+        
+        .uploaded-files-info legend {
+            padding: 0 10px;
+            color: #333;
+            font-weight: bold;
+            background-color: #E8F0FE; /* matching the fieldset background */
+            border-bottom: 1px solid #4A90E2; /* a line under the legend for visual separation */
+        }
+        
+        .uploaded-files-info p {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .uploaded-files-info ul {
+            list-style: none;
+            padding-left: 20px; /* Indent the list a bit */
+            margin-top: 0;
+        }
+        
+        .uploaded-files-info ul li {
+            background-color: #FFFFFF; /* white background for list items */
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+            transition: background-color 0.3s; /* smooth transition for hover effect */
+            font-size: 0.9em;
+        }
+        
+        .uploaded-files-info ul li:hover {
+            background-color: #DDEFFF; /* a slightly different blue on hover */
+        }
+        .form-container {
+            width: 100%; /* Ensures the container fills its parent */
+            max-width: 750px; /* Matches the form max-width for consistency */
+            margin: 20px auto; /* Centers the container */
+            padding: 15px;
+            background-color: #FFFFFF; /* White background for forms */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Aligns children elements to the center */
+        }
+        
+        select, input[type="text"], input[type="file"], datalist, button {
+            width: calc(100% - 20px); /* Adjusts width to account for padding */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Includes padding and border in element's total width */
+        }
+        
+        /* Further adjustments if necessary to align specific elements */
+        #search_input, #unique_values_datalist, #selected_values_container, button {
+            max-width: 750px; /* Adjust based on padding within the .form-container */
+        }
+        #twoColumnsSection {
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: #f9f9f9;
+        }
+        
+        #search_input_two_columns {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        /* Selected Values Styling - Adjusted sizes and hover color */
+        #selected_values_container_two_columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* Reduced gap */
+            margin-top: 10px;
+        }
+        
+        .selected-value {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px; /* Reduced padding for smaller size */
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 15px; /* Adjusted for smaller size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 14px; /* Reduced font size */
+        }
+        
+        .selected-value:hover {
+            background-color: #ff0000; /* Changed hover background color to red */
+        }
+        
+        /* Loading Indicator */
+        #loading_two_columns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        /* General enhancements */
+        datalist {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        option {
+            padding: 8px;
+            cursor: pointer;
+        }
+        
+        input[list]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+        .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+        .radio-container {
+            margin: 20px 0;
+            font-size: 14px; /* Smaller text size for compact appearance */
+        }
+        
+        .radio-label {
+            display: inline-block; /* Inline display for horizontal layout */
+            margin-right: 10px; /* Adjust the spacing between the radio options */
+            cursor: pointer; /* Cursor indication for clickable items */
+            position: relative; /* Positioned relatively for absolute positioning of pseudo-elements */
+            padding-left: 30px; /* Space for the custom radio button and outer rectangle */
+            line-height: 1; /* Adjust line height for a compact appearance */
+            color: #000; /* Default text color */
+            transition: color 0.2s; /* Smooth transition for color change */
+        }
+        
+        
+        
+        .radio-label input[type="radio"] {
+            
+            
+            left: 0;
+            accent-color:#007bff;
+            cursor: pointer;
+            zoom:1.5;
+        }
+        
+        .radio-label input[type="radio"]:checked + label:before {
+            background-color: #007bff; /* Fill color of the pseudo-element (radio button) on check */
+        }
+        
+        .radio-label input[type="radio"]:checked + label {
+            color: #007bff; /* Change label text color when selected */
+        }
+        .radio-buttons-container {
+            display: flex; /* Aligns the children (input and label pairs) inline */
+            align-items: center; /* Centers the items vertically */
+            gap: 10px; /* Creates a gap between each input-label pair */
+        }
+        
+        .radio-buttons-container label {
+            margin-right: 20px; /* Space after each label */
+            background-color: #f0f0f0; /* Light grey background for the label */
+            padding: 5px 10px; /* Padding around the label text */
+            border-radius: 15px; /* Rounded corners for the label */
+            cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+        }
+        
+        .radio-buttons-container input[type="radio"] {
+            display: none; /* Hides the default radio button */
+        }
+        
+        .radio-buttons-container label:before {
+            content: ''; /* Creates a custom radio button */
+            display: inline-block;
+            margin-right: 5px; /* Space before the label text */
+            width: 14px; /* Width of the custom radio button */
+            height: 14px; /* Height of the custom radio button */
+            border-radius: 50%; /* Makes it circular */
+            border: 2px solid #007bff; /* Border color of the custom radio button */
+            background-color: #fff; /* Background color of the custom radio button */
+        }
+        
+        .radio-buttons-container input[type="radio"]:checked + label:before {
+            background-color: #007bff; /* Fill the custom radio button when selected */
+        }
+        fieldset {
+            border: 2px solid #007bff; /* Blue border for the fieldset */
+            border-radius: 8px; /* Rounded corners for the fieldset */
+            padding: 20px; /* Padding inside the fieldset */
+            margin: 20px 0; /* Margin around the fieldset for spacing */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        #unique-values-container {
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+        
+        #unique-values-container h3 {
+            color: #0044CC;
+        }
+        
+        .unique-values-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .unique-values-table th,
+        .unique-values-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .unique-values-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .unique-values-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        form[name="endoresement_date"] label {
+            display: inline-block;  /* Aligns the labels horizontally */
+            margin-right: 10px;     /* Adds some space between each option */
+        }
+        .dropdown-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .dropdown-wrapper .label,
+        .dropdown-wrapper select,
+        .dropdown-wrapper .radio-label {
+            flex: 1; /* Equal width distribution */
+            text-align: left;
+            margin-right: 10px; /* Space between elements */
+            font-size: 16px; /* Uniform font size */
+            cursor: pointer;
+        }
+        
+        /* Adjust the layout for radio labels to create space on the right */
+        .dropdown-wrapper .radio-label {
+            display: flex; /* Flex display for label alignment */
+            align-items: center; /* Vertical alignment */
+            margin: 0 16px 0 0; /* Increased right margin to space out elements */
+            cursor: pointer;
+        }
+        
+        /* Input radio button styling */
+        .dropdown-wrapper input[type="radio"] {
+            margin: 0 20px 0 0; /* Increased right margin for space between the radio button and the label text */
+        }
+        
+        /* Focus styles for better accessibility */
+        .dropdown-wrapper input[type="radio"]:focus + label {
+            outline: 1px dotted #000; /* Dotted outline around the label when radio is focused */
+        }
+        {% comment %} .display-result {
+            position: fixed;/* Position it 20px from the top */
+            right: 20px; /* Position it 20px from the right */
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000; /* Ensure it appears above other elements */
+        }
+        
+        .display-result i {
+            font-size: 15px;
+        }
+    
+        .display-result:hover {
+            background-color: #555;
+            transform: scale(1.1);
+        } {% endcomment %}
+         
+        
+        
+        
+    </style>
+        
+    <title>File Upload</title>
+    <script>
+        function flushSession() {
+            fetch('/myapp/flush_session/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        function toggleDisplay(isYesSelected) {
+            // Display the UID dropdown if "Yes" is selected
+            document.getElementById('uidSection').style.display = isYesSelected ? 'block' : 'none';
+            // Display the two columns selection if "No" is selected
+            document.getElementById('twoColumnsSection').style.display = isYesSelected ? 'none' : 'block';
+        }
+        var globalColumns = []; 
+        function fetchColumnData() {
+            const loadingElement = document.getElementById('loading_two_columns');
+            const dataList = document.getElementById('unique_values_datalist_two_columns');
+        
+            // Show loading message
+            loadingElement.style.display = 'block';
+        
+            // Fetch the unique values from the server
+            fetch(`/myapp/get_columns/`) // The URL to your Django view that returns column values
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate the datalist with the column data
+                    dataList.innerHTML = "";
+                    data.columns.forEach(value => {
+                        let option = document.createElement("option");
+                        option.value = value;
+                        dataList.appendChild(option);
+                    });
+                    globalColumns = data.columns;
+                })
+                .catch(error => {
+                    console.error("Error fetching column data:", error);
+                })
+                .finally(() => {
+                    // Hide loading message
+                    loadingElement.style.display = 'none';
+                });
+        }
+        
+        // Function to handle the update of selected values
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchColumnData(); // Assuming this function populates the datalist options
+        
+            const searchInput = document.getElementById("search_input_two_columns");
+            const dataList = document.getElementById("unique_values_datalist_two_columns");
+            const selectedValuesContainer = document.getElementById("selected_values_container_two_columns");
+        
+            searchInput.addEventListener("input", function(event) {
+                let inputValue = event.target.value.trim();
+        
+                // Check if the inputValue matches any of the datalist options
+                let isOptionMatch = Array.from(dataList.options).some(option => option.value === inputValue);
+        
+                // Only add if it's a matching option and not already selected
+                if (inputValue && isOptionMatch && !document.querySelector(`[data-value="${inputValue}"]`)) {
+                    let div = document.createElement("div");
+                    div.setAttribute("class", "selected-value");
+                    div.setAttribute("data-value", inputValue);
+                    div.textContent = inputValue + " (Click to remove)";
+                    div.addEventListener("click", function() {
+                        this.remove();
+                        updateSelectedValues(); // Update selected values after removal
+                    });
+                    selectedValuesContainer.appendChild(div);
+                    updateSelectedValues(); // Update selected values after adding a new item
+                    searchInput.value = ""; // Clear the input for a new selection
+                }
+            });
+        });
+        
+        function updateSelectedValues() {
+            let selectedDivs = document.querySelectorAll("#selected_values_container_two_columns .selected-value");
+            let selectedValues = Array.from(selectedDivs).map(div => div.getAttribute("data-value"));
+            console.log("Selected Values:", selectedValues);
+            // Additional code to handle the selected values can be added here
+            fetch(`/myapp/handle_selected_values/`, { // Update this URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector("[name=csrfmiddlewaretoken]").value
+                },
+                body: JSON.stringify({ 'selectedValues': selectedValues })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Handle response data from the server
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function addMoreFields() {
+            const button = document.querySelector("button[onclick='addMoreFields()']");
+            if (button) button.style.display = 'none';
+            const container = document.getElementById("additional_fields_container");
+            let closeButton = document.createElement("button");
+            closeButton.textContent = "Close The AddMoreFields Option";
+            closeButton.style.marginTop = "10px";
+            closeButton.onclick = function() {
+                // Clear the container
+                container.innerHTML = '';
+                // Show the add more fields button again
+                if (button) button.style.display = 'inline-block';
+            };
+            container.appendChild(closeButton);
+        
+            if (container.querySelector("select[name='other']")) return;
+        
+            let searchInput = document.createElement("input");
+            searchInput.placeholder = "Search...";
+            searchInput.style.padding = "8px";
+            searchInput.style.margin = "5px 0";
+            searchInput.style.width = "calc(100% - 20px)";
+            searchInput.style.borderRadius = "4px";
+            searchInput.style.border = "1px solid #ccc";
+            
+            container.appendChild(searchInput);
+        
+            let selectDiv = document.createElement("div");
+            selectDiv.setAttribute("tabindex", "0");
+            selectDiv.style.border = "1px solid #ccc";
+            selectDiv.style.borderRadius = "4px";
+            selectDiv.style.maxHeight = "200px";
+            selectDiv.style.overflowY = "auto";
+            selectDiv.style.display = "none";
+            selectDiv.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+            selectDiv.style.backgroundColor = "#fff";
+            container.appendChild(selectDiv);
+        
+            searchInput.addEventListener("focus", () => selectDiv.style.display = "block");
+            searchInput.addEventListener("input", () => selectDiv.style.display = "block");
+        
+            let columnsOptions = document.querySelector("[name='gross_premium']").options;
+            const excludedColumns = ["uid", "endorsement_date", "start_date", "cancellation", "gross_premium"];
+        
+            for (let option of columnsOptions) {
+                if (!excludedColumns.includes(option.value)) {
+                    let optionDiv = document.createElement("div");
+                    optionDiv.textContent = option.text;
+                    optionDiv.dataset.value = option.value;
+                    optionDiv.style.padding = "5px 10px";
+                    optionDiv.style.cursor = "pointer";
+                    optionDiv.style.borderBottom = "1px solid #eee";
+                    optionDiv.addEventListener("click", function() {
+                        this.classList.toggle("selected");
+                        updateSelectedOptionsDisplay();
+                        selectDiv.style.display = "none";
+                    });
+                    selectDiv.appendChild(optionDiv);
+                }
+            }
+        
+            let displayArea = document.createElement("div");
+            displayArea.id = "selected_options_display";
+            displayArea.style.padding = "5px";
+            displayArea.style.marginTop = "5px";
+            displayArea.style.border = "1px solid #ccc";
+            displayArea.style.borderRadius = "4px";
+            displayArea.style.backgroundColor = "#f9f9f9";
+            container.appendChild(displayArea);
+        
+            // Updated part of the JavaScript function for sending AJAX request
+            function updateSelectedOptionsDisplay() {
+                displayArea.innerHTML = ""; // Clear current display
+                let selectedOptions = selectDiv.querySelectorAll(".selected");
+                let customSelectedValues = Array.from(selectedOptions).map(option => option.dataset.value);
+            
+                Array.from(selectedOptions).forEach(option => {
+                    let div = document.createElement("div");
+                    div.textContent = option.textContent;
+                    div.style.padding = "5px 10px";
+                    div.style.margin = "5px";
+                    div.style.display = "flex";
+                    div.style.alignItems = "center";
+                    div.style.justifyContent = "space-between";
+                    div.style.backgroundColor = "#007bff";
+                    div.style.color = "#fff";
+                    div.style.borderRadius = "20px";
+                    div.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.2)";
+            
+                    // Create remove button
+                    let removeBtn = document.createElement("span");
+                    removeBtn.textContent = "×"; // Using the multiplication symbol for a visually pleasing 'x'
+                    removeBtn.style.marginLeft = "10px";
+                    removeBtn.style.cursor = "pointer";
+                    removeBtn.style.fontSize = "20px";
+                    removeBtn.style.display = "inline-block";
+                    removeBtn.style.padding = "0 5px";
+            
+                    // Remove button click event
+                    removeBtn.onclick = function() {
+                        option.classList.remove("selected");
+                        div.remove();
+                        updateSelectedOptionsDisplay(); // Update the display area
+                    };
+            
+                    div.appendChild(removeBtn); // Append the remove button to the div
+                    displayArea.appendChild(div);
+                });
+            
+                let data = JSON.stringify({ 'customSelectedValues': customSelectedValues });
+            
+                fetch('/myapp/handle_custom_selected_values/', { // Updated URL path
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCSRFToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: data,
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }
+            
+            
+   
+            
+            function getCSRFToken() {
+                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                return csrftoken;
+            }
+            
+        
+            searchInput.addEventListener("input", function() {
+                const searchText = this.value.toLowerCase();
+                const options = selectDiv.querySelectorAll("div");
+                options.forEach(option => {
+                    const matches = option.textContent.toLowerCase().includes(searchText);
+                    option.style.display = matches ? "block" : "none";
+                });
+            });
+        
+            // Create a container for the radio buttons
+            let radioContainer = document.createElement("div");
+            radioContainer.style.display = "flex";
+            radioContainer.style.justifyContent = "space-around";
+            radioContainer.style.marginTop = "10px";
+
+            ["First", "Last"].forEach(pref => {
+                let label = document.createElement("label");
+                label.textContent = pref;
+                label.style.margin = "0 10px"; // Give some space around the label for better readability
+
+                let radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "date_preference";
+                radio.value = pref.toLowerCase();
+
+                label.insertBefore(radio, label.firstChild); // Insert radio button before the label text
+                radioContainer.appendChild(label); // Append the label (which includes the radio button) to the container
+            });
+
+            container.appendChild(radioContainer); // Append the radio button container to the main container
+        }
+        
+        
+        
+       
+        
+        function showHideOptions() {
+            // Check if 'Total' is selected
+            if (document.getElementById('total').checked) {
+                // Show the 'First' and 'Last' options
+                document.getElementById('total_options').style.display = 'block';
+            } else {
+                // Hide the 'First' and 'Last' options
+                document.getElementById('total_options').style.display = 'none';
+            }
+        }
+
+        // Initialize the display on page load
+        document.addEventListener('DOMContentLoaded', showHideOptions);
+        
+
+
+        function getUniqueValues() {
+            var secret = document.querySelector('select[name="column_select"]').value;
+            document.getElementById('selected_column').value = secret;
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) loadingElement.style.display = 'block';
+        
+            const selectedColumn = document.querySelector("[name='column_select']").value;
+        
+            fetch(`/myapp/get_unique_values/?column=${selectedColumn}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayUniqueValues(data.unique_values);  // Call to display unique values in a table
+                })
+                .catch(error => {
+                    console.error("Error fetching unique values:", error);
+                })
+                .finally(() => {
+                    if (loadingElement) loadingElement.style.display = 'none';
+                });
+        }
+        
+        function displayUniqueValues(uniqueValues) {
+            const container = document.getElementById("unique-values-container");
+            if (!container) {
+                console.error("Container for unique values not found.");
+                return;
+            }
+        
+            let contentHtml = '<h3>SELECT DATE SELECTION FOR EACH COLUMN :</h3>';
+            let optionsHtml = globalColumns.map(column => `<option value="${column}">${column}</option>`).join('');
+        
+            contentHtml += '<table class="unique-values-table">';
+            contentHtml += '<tr><th>Value</th><th>Start Date</th><th>End Date</th><th>StartDate-Selection</th><th>EndDate-Selection</th></tr>';
+        
+            uniqueValues.forEach((value, index) => {
+                contentHtml += `<tr>
+                                    {% comment %} <td>${index + 1}</td> {% endcomment %}
+                                    <td>${value}</td>
+                                    <td><select name="start_date[]">${optionsHtml}</select></td>
+                                    <td><select name="end_date[]">${optionsHtml}</select></td>
+                                    <td>
+                                        <select name="group_by_type_start_date[]">
+                                            <option value="min">Min</option>
+                                            <option value="max">Max</option>
+                                            <option value="first">First</option>
+                                            <option value="last">Last</option>2
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="group_by_type_end_date[]">
+                                            <option value="min">Min</option>
+                                            <option value="max">Max</option>
+                                            <option value="first">First</option>
+                                            <option value="last">Last</option>
+                                        </select>
+                                    </td>
+                                </tr>`;
+            });            
+        
+            contentHtml += '</table>';
+            container.innerHTML = contentHtml;
+        }
+        
+        
+        
+
+        
+        
+        
+    
+        {% comment %} document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("search_input").addEventListener("change", function() {
+                let selectedValue = this.value;
+                // Only add if it's not already selected
+                if (!document.querySelector(`[data-value="${selectedValue}"]`)) {
+                    let div = document.createElement("div");
+                    div.setAttribute("data-value", selectedValue);
+                    div.textContent = selectedValue + " (Click to remove)";
+                    div.onclick = function() {
+                        this.remove();
+                        // Call logSelectedValues every time an item is removed as well, if needed
+                        logSelectedValues();
+                    };
+                    document.getElementById("selected_values_container").appendChild(div);
+        
+                    // Call logSelectedValues after adding a new value to automatically log and save the selection
+                    logSelectedValues();
+                }
+                this.value = ""; // Clear the input
+            });
+        }); {% endcomment %}
+        
+        function logSelectedValues() {
+            let selectedDivs = document.querySelectorAll("#selected_values_container div");
+            let selectedValues = Array.from(selectedDivs).map(div => div.getAttribute("data-value"));
+            console.log(selectedValues);
+            fetch(`/myapp/save_negative_exposures/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector("[name=csrfmiddlewaretoken]").value
+                },
+                body: JSON.stringify({ 'negative_exposures': selectedValues })
+            });
+        }
+        function updateDateFormats() {
+            var separator = document.getElementById('date_separator').value;
+            var dateFormatSelect = document.getElementById('date_format');
+            dateFormatSelect.innerHTML = ''; // Clear existing options
+        
+            // Define possible date formats
+            var formats = ['dd' + separator + 'mm' + separator + 'yy', 'mm' + separator + 'dd' + separator + 'yy', 'dd' + separator + 'mm' + separator + 'yyyy', 'mm' + separator + 'dd' + separator + 'yyyy', 'yy' + separator + 'mm' + separator + 'dd', 'yyyy' + separator + 'mm' + separator + 'dd'];
+            
+            // Populate the date format select box
+            for (var i = 0; i < formats.length; i++) {
+                var option = document.createElement('option');
+                option.value = formats[i];
+                option.text = formats[i].toUpperCase();
+                dateFormatSelect.appendChild(option);
+            }
+        }
+        
+        // Initialize date formats on page load
+        window.onload = updateDateFormats;
+        
+    </script>
+</head>
+<body>
+ 
+    <div class="tab">
+        <a href="{% url 'display_results' %}" class="display-results">Premium Results</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">Claims Results</a>
+        <a href="{% url 'display_os_results' %}" class="display-os-results">OS Results</a>
+        <a href="{% url 'upload_and_display' %}" class="upload">Upload Premium Files</a>
+        <a href="{% url 'claims_file_upload' %}" class="claims-button">Upload Claims Files</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">Upload OS Files</a>
+        <a href="{% url 'upload_mapping' %}" class="upload_mapping">Mapping Section</a>
+        <a href="{% url 'mapping_upload' %}" class="mapping_upload">Upload Mapping</a>
+        <a href="{% url 'Naming_Convention' %}" class="Naming_Convention">UAE NAMING</a>
+        <a href="{% url 'display_results' %}" class="display-result">→</a>
+        {% comment %} <a href="{% url 'combined_results' %}" class="fina;-button">View Combined Results</a> {% endcomment %}
+        {% comment %} <a href="{% url 'display_results' %}" class="display-result">
+            <i class="fas fa-arrow-right"></i>
+        </a> {% endcomment %}
+    </div>
+    <br>
+    <br>
+    
+    
+    <h1>Upload Premium Data Files</h1>
+    <button type="button" onclick="flushSession()">Clear Session</button>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload and Merge</button>
+    </form>
+    
+    {% if columns %}
+<form action="/myapp/process_data/" method="post">
+    {% if message %}
+    <p style="text-align: center;">{{ message }}</p>
+        <fieldset class="uploaded-files-info">
+            <legend>Uploaded Files Information</legend>
+            <p>Number of files merged: {{ file_details|length }}</p>
+            <p>Total number of entries: {{ total_entries }}</p>
+            <p>File names and entries:</p>
+            <ul>
+                {% for file in file_details %}
+                <li>{{ file.name }} - {{ file.entries }} entries</li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    {% endif %}
+    {% csrf_token %}
+    <div class="radio-container">
+        <div class="dropdown-wrapper">
+        <span class="label">UID SELECTION:</span>
+        <label class="radio-label"><input type="radio" name="selection" value="yes" onclick="toggleDisplay(true)"> Yes</label>
+        <label class="radio-label"><input type="radio" name="selection" value="no" onclick="toggleDisplay(false)"> No</label>
+        </div>
+    </div>
+    
+
+    <div id="uidSection" style="display: none;">
+        <div class="dropdown-wrapper">
+        <span class="label">UID:</span>
+        <select name="uid">
+            <!-- Dynamically generated options from the server -->
+            {% for column in columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    </div>
+
+<!-- Section for selecting two columns, initially hidden -->
+<div id="twoColumnsSection" style="display: none;">
+    <p>SELECT COLUMNS FOR UID:</p>
+    <input type="text" id="search_input_two_columns" list="unique_values_datalist_two_columns" placeholder="Search and select a value...">
+    <datalist id="unique_values_datalist_two_columns">
+        <!-- Options will be dynamically added by JavaScript -->
+    </datalist>
+
+    <!-- Container for selected values -->
+    <div id="selected_values_container_two_columns"></div>
+
+    <!-- A hidden div for showing a loading indicator (optional) -->
+    <div id="loading_two_columns" style="display: none;">Loading...</div>
+
+    <!-- Include CSRF token in the template for POST requests -->
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+</div>
+    <!-- A container to add new combo boxes -->
+    <div class="dropdown-wrapper">
+
+    <span class="label">CHOOSE A DATE SEPARATOR:</span>
+    <select id="date_separator" name="date_separator" onchange="updateDateFormats();">
+        <option value="-">DASH (-)</option>
+        <option value="/">SLASH (/)</option>
+    </select>
+</div>
+
+
+    <!-- HTML for selecting date format -->
+    <div class="dropdown-wrapper">
+    <span class="label">CHOOSE A DATE FORMAT:</span>
+    <select id="date_format" name="date_format">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+</div>
+
+    
+    <div class="dropdown-wrapper">
+    <span class="label">ENDORSEMENT COLUMN:</span>
+    <select name="column_select" onchange="getUniqueValues()">
+        {% for column in columns %}
+        <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+</div>
+    <input type="hidden" name="selected_column" id="selected_column">
+
+
+    <!-- Section for UID selection, initially hidden -->
+
+    <div id="unique-values-container"></div>
+    <div id="date-time-selections-container"></div>
+    <div class="dropdown-wrapper">
+        <span class="label">ENDORSEMENT DATE:</span>
+        <select name="endoresement_date">
+            {% for column in columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    {% comment %} START_DATE:
+    <select name="start_date">
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select> {% endcomment %}
+
+    {% comment %} <br>
+    <fieldset>
+        <p>Select Option for Start Date:</p>
+    <div class="radio-buttons-container">
+    <div>
+        <input type="radio" id="first" name="start_date_preference" value="first">
+        <label for="first">First</label>
+    </div>
+
+    <div>
+        <input type="radio" id="last" name="start_date_preference" value="last">
+        <label for="last">Last</label>
+    </div>
+    </div>
+</fieldset> {% endcomment %}
+
+
+    {% comment %} END DATE:
+    <select name="POSITIVE_ID">
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+    <br> {% endcomment %}
+    {% comment %} END DATE FOR CANCELLATION:
+    <select name="cancellation">
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+    <br> {% endcomment %}
+    <div class="dropdown-wrapper">
+    <span class="label">GROSS_PREMIUM:</span>
+    <select name="gross_premium">
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+    </div>
+    
+    <div id="additional_fields_container" style="margin-bottom: 20px;"></div>
+<button onclick="addMoreFields()" type="button">Add More Fields</button>
+
+    <!-- The Yes/No radio buttons -->
+
+
+    <fieldset>
+        <label for="yes_exposure">SELECT EXPOSURE CONDITION:</label>
+        <div class="radio-buttons-container">
+            <input type="radio" id="yes_exposure" name="show_exposure" value="365.25" checked>
+            <label for="yes_exposure">365.25</label>
+            <input type="radio" id="no_exposure" name="show_exposure" value="395" >
+            <label for="no_exposure">395</label>
+            
+        </div>
+        
+        </fieldset>
+    <script>
+        
+        console.log('show_exposure:', document.querySelector('input[name="show_exposure"]:checked').value);
+    </script>
+
+
+<fieldset>
+<label for="yes_insured">SHOW SumInsured COLUMN:</label>
+<div class="radio-buttons-container">
+    <input type="radio" id="yes_insured" name="show_sum_insured" value="Yes" onclick="toggleSumInsuredVisibility(true)">
+    <label for="yes_insured">Yes</label>
+    <input type="radio" id="no_insured" name="show_sum_insured" value="No" onclick="toggleSumInsuredVisibility(false)" checked>
+    <label for="no_insured">No</label>
+</div>
+</fieldset>
+
+
+
+
+
+<!-- The existing code for sum_insured_choice -->
+<div id="sum_insured_section" style="display: none;">
+    <div class="dropdown-wrapper">
+    <span class="label">SUM INSURED:</span>
+    <select name="column_name" id="column_name">
+        {% for column in columns %}
+        <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+</div>
+<br><br>
+
+<fieldset>
+    <p>SELECT TYPE:</p>
+    <div class="radio-buttons-container">
+    <input type="radio" id="incremental" name="sum_insured_choice" value="Incremental">
+    <label for="incremental">INCREMENTAL</label><br>
+
+    <input type="radio" id="total" name="sum_insured_choice" value="Total" onclick="showHideOptions()">
+    <label for="total">Total</label><br><br>
+    </div>
+</fieldset>
+
+
+    <div id="total_options" style="display: none;">
+        <fieldset>
+            <p>SELECT FIRST OR LAST:</p>
+        <div class="radio-buttons-container">
+        <input type="radio" id="first_sum_insured" name="sum_insured_timeframe" value="First">
+        <label for="first_sum_insured">First</label>
+
+        <input type="radio" id="last_sum_insured" name="sum_insured_timeframe" value="Last">
+        <label for="last_sum_insured">Last</label><br><br>
+        </div>
+    </fieldset>
+    </div>
+</div>
+<fieldset>
+    <p>SELECT SPLIT TYPE:</p>
+    <div class="radio-buttons-container">
+        <input type="radio" id="yearly" name="split_type" value="Yearly">
+        <label for="yearly">YEARLY SPLIT</label><br>
+
+        <input type="radio" id="quarterly" name="split_type" value="Quarterly">
+        <label for="quarterly">QUARTERLY SPLIT</label><br><br>
+    </div>
+</fieldset>
+
+<script>
+    
+    function toggleSumInsuredVisibility(show) {
+        document.getElementById('sum_insured_section').style.display = show ? 'block' : 'none';
+    }
+
+    function showHideOptions() {
+        // Existing logic to show/hide the options under "Total"
+        var isChecked = document.getElementById('total').checked;
+        document.getElementById('total_options').style.display = isChecked ? 'block' : 'none';
+    }
+    
+</script>
+
+
+    <button type="submit">Proceed</button>
+</form>
+    {% endif %}   
+</body>
+</html>

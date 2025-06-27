@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: white;
+            padding-top: 60px; /* Space for the navbar */
+        }
+        
+        /* Navbar styling */
+        .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+        
+        /* Sidebar styling */
+        .side-nav {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: -220px; /* Start offscreen */
+            height: 100%;
+            background-image: linear-gradient(to bottom, #0567a6, #034d7a); /* Blue gradient */
+            overflow-x: hidden;
+            padding-top: 60px; /* Height of the navbar */
+            transition: left 0.5s; /* Smooth sliding effect */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .side-nav button {
+            padding: 12px 16px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: white;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .side-nav button:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+        
+        .side-nav button.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+        
+        /* Content styling */
+        .content {
+            padding: 20px;
+            margin-left: 220px; /* Same as the sidebar width */
+            transition: margin-left 0.5s; /* Smooth transition for content margin */
+        }
+        
+        .data {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hide each content block */
+            overflow-x: auto; /* Allows scrolling for wide tables */
+        }
+        /* Styling for tables within data divs */
+        .data table {
+            width: 100%;
+            border-collapse: collapse; /* Removes gaps between cells */
+            margin: 20px 0; /* Adds margin around the table */
+        }
+        .data th, .data td {
+            border: 1px solid #ddd; /* Light border for cells */
+            padding: 8px; /* Padding inside cells */
+            text-align: left; /* Align text to left */
+        }
+        .data th {
+            background-color: #0567a6; /* Header background */
+            color: white; /* Text color for headers */
+        }
+        .data tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra-striping for rows */
+        }
+        .data tr:hover {
+            background-color: #ddd; /* Hover effect for rows */
+        }
+        .side-nav button {
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: white;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid #034f84; /* Dark blue border for separation */
+        }
+        .side-nav button:last-child {
+            border-bottom: none; /* Remove border for the last button */
+        }
+        .side-nav button:hover {
+            background-color: #FBD185; /* Golden for hover */
+            color: #0567a6; /* Blue text */
+        }
+        .side-nav button.active {
+            background-color: #034f84; /* Darker blue for active */
+            color: white;
+        }
+        .data-length {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+            font-weight: bold;
+            border: 2px solid #007bff; /* Example: 2px solid blue border */
+            padding: 8px; /* Add some padding inside the border */
+            border-radius: 5px; /* Optional: adds rounded corners to the border */
+        }
+        
+    
+        .download-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+    
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        
+    </style>
+
+</head>
+<body>
+    <div class="tab">
+        <button class="tablinks" onclick="goBack()">Home</button>
+        <a href="#" class="tablinks" id="premium-checks-button">Premium Checks</a>
+        <a href="{% url 'display_results' %}" class="display-results">Premium Results</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">Claims Results</a>
+        <a href="{% url 'display_os_results' %}" class="display-os-results">OS Results</a>
+        <a href="{% url 'upload_and_display' %}" class="upload">Upload Premium Files</a>
+        <a href="{% url 'claims_file_upload' %}" class="claims-button">Upload Claims Files</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">Upload OS Files</a>
+        <a href="{% url 'upload_mapping' %}" class="upload_mapping">Mapping Section</a>
+        <a href="{% url 'mapping_upload' %}" class="mapping_upload">Upload Mapping</a>
+        <a href="{% url 'Naming_Convention' %}" class="Naming_Convention">UAE NAMING</a>
+        <a href="{% url 'upload_mapping' %}" class="upload_mapping">→</a>
+        {% comment %} <a href="{% url 'combined_results' %}" class="fina;-button">View Combined Results</a> {% endcomment %}
+    </div>
+    <br>
+    <br>
+    
+    
+    <div class="side-nav">
+        <!-- Side navigation buttons -->
+        <button onclick="showContent('content1')">Blank Policy Start Date</button>
+        <button onclick="showContent('content2')">Blank Policy End Date</button>
+        <button onclick="showContent('content4')">PED before PSD</button>
+        <button onclick="showContent('content5')">Blank Premium</button>
+        <button onclick="showContent('content6')">Negative Premium</button>
+        <button onclick="showContent('content7')">Blank UID</button>
+        <button onclick="showContent('content8')">Blank Endorsement</button>
+        <button onclick="showContent('content9')">UID Exposure Check</button>
+        <button onclick="showContent('content10')">Total Exposure Less Than 1</button>
+        <button onclick="showContent('content11')">Total Exposure greater Than 1</button>
+        <button onclick="showContent('content12')">Exposure Less Than 1</button>
+        <button onclick="showContent('content13')">Exposure Greater Than 1</button>
+        <button onclick="showContent('content14')">No. of days <= 50 </button>
+        <button onclick="showContent('content15')">No. of days <= 100 </button>
+        <button onclick="showContent('content16')">No. of days <= 150 </button>
+        <button onclick="showContent('content17')">No. of days <= 200 </button>
+        <button onclick="showContent('content18')">No. of days <= 250 </button>
+        <button onclick="showContent('content19')">No. of days <= 300 </button>
+        <!-- ... other buttons ... -->
+    </div>
+    <div class="content">
+        <div id="initial-content" class="data" style="display: block;">
+            <h1>Updated Data</h1>
+            <table>
+                <thead>
+                    <tr>
+                        {% for column in dataframe.columns %}
+                            <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _, row in dataframe.iterrows %}
+                    <tr>
+                        {% for cell in row %}
+                        <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Render the dataframe directly from the context -->
+            {{ dataframe|safe }}
+
+
+            {% if show_download_link %}
+        <a href="{% url 'download_csv' %}" class="btn btn-primary">Download CSV</a>
+        <a href="{% url 'download_csv1' %}" class="btn btn-primary">Download as UAE Naming Convention</a>
+        
+    {% endif %}
+    <h1>Data Summary</h1>
+    <table class="summary-table">
+        <tr>
+            <th>Detail</th>
+            <th>Count</th>
+        </tr>
+        <tr>
+            <td>Total entries</td>
+            <td>{{ original_count }}</td>
+        </tr>
+        <tr>
+            <td>Removed entries</td>
+            <td>{{ removed_count }}</td>
+        </tr>
+        <tr>
+            <td>Total after removal</td>
+            <td>{{ final_count }}</td>
+        </tr>
+        <tr>
+            <td>Number of UID removed</td>
+            <td>{{ UID_count }}</td>
+        </tr>
+        <tr>
+            <td>Number of ENDORSEMENT DATES removed DUE TO CONVERSION</td>
+            <td>{{ END_DATE_count }}</td>
+        </tr>
+        <tr>
+            <td>Number of START DATES removed DUE TO CONVERSION</td>
+            <td>{{ START_DATECOUNT }}</td>
+        </tr>
+        <tr>
+            <td>Number of CANCELLATION DATES removed DUE TO CONVERSION</td>
+            <td>{{ CANCELLATION_DATE_COUNT }}</td>
+        </tr>
+        <tr>
+            <td>Number of ENTRIES removed DUE TO PSD > PED</td>
+            <td>{{ GREATER_COUNT }}</td>
+        </tr>
+        <tr>
+            <td>Number of POLICY EFFECTIVE DATE REMOVED DUE TO NULL</td>
+            <td>{{ START_NULL_COUNT }}</td>
+        </tr>
+
+        <tr>
+            <td>Number of POLICY END DATE REMOVED DUE TO NULL</td>
+            <td>{{ END_NULL_COUNT }}</td>
+        </tr>
+
+    </table>
+    <h1>DATA AFTER SPLIT</h1>
+    
+    {{ dataframe1|safe }}
+    <a href="{% url 'download_new_df_csv' %}">Downlaod Splitted Data</a>
+    <br>
+    <br>
+    {% comment %} <h1>DATA AFTER QUARTERLY SPLIT</h1>
+    {{Quarter_split|safe}}
+    <a href="{% url 'quarter_data' %}">Downlaod Quarterly Split</a> {% endcomment %}
+
+
+    <br>
+        </div>    
+        <!-- Content divs -->
+        <div id="content1" class="data">
+            <p class="data-length">Number Of Null Policy Start Dates: {{ NULL_START_UIDS_len}}</p>
+            {{ NULL_START_UIDS|safe }}
+            <a href="{% url 'download_checks' %}?name=NULL_START_UIDS" class="download-btn">Download</a>
+        </div>
+        <div id="content2" class="data">
+            <p class="data-length">Number Of Null Policy End Dates: {{ NULL_END_UIDS_len}}</p>
+            {{ NULL_END_UIDS|safe }}
+            <a href="{% url 'download_checks' %}?name=NULL_END_UIDS" class="download-btn">Download</a>
+        </div>
+        <div id="content4" class="data">
+            <p class="data-length">Number Of PED before PSD : {{ NULL_INVALID_UIDS_len}}</p>
+            {{ Invalid_date|safe }}
+            <a href="{% url 'download_checks' %}?name=Invalid_date" class="download-btn">Download</a>
+        </div>
+        <div id="content5" class="data">
+            <p class="data-length">Number Of Blank Premiums : {{ NULL_PREMIUM_UIDS_len}}</p>
+            {{ gross_null|safe }}
+            <a href="{% url 'download_checks' %}?name=gross_null" class="download-btn">Download</a>
+        </div>
+        <div id="content6" class="data">
+            <p class="data-length">Number Of Negative Premiums : {{ NULL_NEGATIVE_UIDS_len}}</p>
+            {{ negative_gross_df|safe }}
+            <a href="{% url 'download_checks' %}?name=negative_gross_df" class="download-btn">Download</a>
+        </div>
+        <div id="content7" class="data">
+            <p class="data-length">Number Of Blank UIDS : {{ NULL_UIDS_UIDS_len}}</p>
+            {{ null_uids_df|safe }}
+            <a href="{% url 'download_checks' %}?name=null_uids_df" class="download-btn">Download</a>
+        </div>
+        <div id="content8" class="data">
+            <p class="data-length">Number Of Blank Endorsement : {{ NULL_ENDOR_UIDS_len}}</p>
+            {{ null_end_df|safe }}
+            <a href="{% url 'download_checks' %}?name=null_end_df" class="download-btn">Download</a>
+        </div>
+        <div id="content9" class="data">
+            <p class="data-length">Number Of UID Exposure Entries : {{ NULL_EXPO_UIDS_len}}</p>
+            {{ exposure_df|safe }}
+            <a href="{% url 'download_checks' %}?name=exposure_df" class="download-btn">Download</a>
+        </div>
+        <div id="content10" class="data">
+            <p class="data-length">Total Exposure less than 1 : {{ exposure_less_than_1_len}}</p>
+            {{ exposure_less_than_1|safe }}
+            <a href="{% url 'download_checks' %}?name=exposure_less_than_1" class="download-btn">Download</a>
+        </div>
+        <div id="content11" class="data">
+            <p class="data-length">Total Exposure greater than 1 : {{exposure_more_than_1_len}}</p>
+            {{ exposure_more_than_1|safe }}
+            <a href="{% url 'download_checks' %}?name=exposure_more_than_1" class="download-btn">Download</a>
+        </div>
+        <div id="content12" class="data">
+            <p class="data-length">Exposure less than 1 : {{exposure_less_than_1_len_expo}}</p>
+            {{ exposure_less_than_1_expo|safe }}
+            <a href="{% url 'download_checks' %}?name=exposure_less_than_1_expo" class="download-btn">Download</a>
+        </div>
+        <div id="content13" class="data">
+            <p class="data-length">Exposure greater than 1 : {{exposure_more_than_1_len_expo}}</p>
+            {{ exposure_more_than_1_expo|safe }}
+            <a href="{% url 'download_checks' %}?name=exposure_more_than_1_expo" class="download-btn">Download</a>
+        </div>
+        <div id="content14" class="data">
+            <p class="data-length">No. of days <= 50 : {{ df_50_days_len}}</p>
+            {{df_50_days|safe }}
+            <a href="{% url 'download_checks' %}?name=df_50_days" class="download-btn">Download</a>
+        </div>
+        <div id="content15" class="data">
+            <p class="data-length">No. of days <= 100: {{ df_100_days_len }}</p>
+            {{ df_100_days|safe }}
+            <a href="{% url 'download_checks' %}?name=df_100_days" class="download-btn">Download</a>
+        </div>
+        
+        <div id="content16" class="data">
+            <p class="data-length">No. of days <= 150: {{ df_150_days_len }}</p>
+            {{ df_150_days|safe }}
+            <a href="{% url 'download_checks' %}?name=df_150_days" class="download-btn">Download</a>
+        </div>
+        
+        <div id="content17" class="data">
+            <p class="data-length">No. of days <= 200: {{ df_200_days_len }}</p>
+            {{ df_200_days|safe }}
+            <a href="{% url 'download_checks' %}?name=df_200_days" class="download-btn">Download</a>
+        </div>
+        
+        <div id="content18" class="data">
+            <p class="data-length">No. of days <= 250: {{ df_250_days_len }}</p>
+            {{ df_250_days|safe }}
+            <a href="{% url 'download_checks' %}?name=df_250_days" class="download-btn">Download</a>
+        </div>
+        
+        <div id="content19" class="data">
+            <p class="data-length">No. of days <= 300: {{ df_300_days_len }}</p>
+            {{ df_300_days|safe }}
+            <a href="{% url 'download_checks' %}?name=df_300_days" class="download-btn">Download</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state
+            goBack();
+    
+            document.getElementById('premium-checks-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                toggleSidebar();
+            });
+    
+            // Add event listener for the Home button
+            document.getElementById('home-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                goBack();
+            });
+        });
+    
+        function showContent(contentId) {
+            var contents = document.querySelectorAll('.content .data');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+            var selectedContent = document.getElementById(contentId);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+            document.getElementById('initial-content').style.display = 'none'; // Hide initial content
+            
+        }
+    
+        function isSidebarOpen() {
+            var sideNav = document.querySelector('.side-nav');
+            return sideNav.style.left === '0px';
+        }
+    
+        function toggleSidebar() {
+            var sideNav = document.querySelector('.side-nav');
+            var contentDivs = document.querySelector('.content');
+            if (sideNav.style.left === '0px') {
+                closeSidebar();
+                contentDivs.style.marginLeft = '0px'; // Full width when sidebar is closed
+            } else {
+                sideNav.style.left = '0px';
+                contentDivs.style.marginLeft = '220px'; // Adjust for sidebar
+            }
+        }
+    
+        function goBack() {
+            closeSidebar();
+            // Hide all content divs and show only the initial content
+            var contents = document.querySelectorAll('.content .data');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+            document.getElementById('initial-content').style.display = 'block';
+        }
+    
+        function closeSidebar() {
+            var sideNav = document.querySelector('.side-nav');
+            var contentDivs = document.querySelector('.content');
+            sideNav.style.left = '-220px';
+            contentDivs.style.marginLeft = '0px';
+        }
+    </script>
+    
+    
+
+    
+</body>
+</html>
+
+

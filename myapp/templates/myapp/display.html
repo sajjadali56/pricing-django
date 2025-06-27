@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merged DataFrame</title>
+    <style>
+        /* Define CSS styles for the table */
+        table {
+            width: 50%; /* Adjust the width as needed */
+            border-collapse: collapse;
+            margin: 20px auto; /* Center the table horizontally */
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Merged DataFrame (First 5 Records)</h1>
+    <table>
+        <thead>
+            <tr>
+                <!-- Define your table headers here -->
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 3</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {{ table|safe }}
+        </tbody>
+    </table>
+</body>
+</html>

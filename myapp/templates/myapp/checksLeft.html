@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checks Navigation</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .side-nav {
+        margin-top: 45px; /* Adjusted to create space below the navbar */
+        width: 238px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: #2c3e50; /* Darker shade for better contrast */
+        padding-top: 20px;
+        box-shadow: 3px 0 10px rgba(0,0,0,0.3);
+    }
+    .side-nav button {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        text-align: left;
+        background-color: #34495e; /* Slightly lighter shade for buttons */
+        color: #ecf0f1; /* Light color text */
+        border: none;
+        border-bottom: 1px solid #ccc;
+        outline: none;
+        transition: all 0.3s;
+        font-size: 16px;
+        border-left: 3px solid transparent; /* Add a border for active state indication */
+    }
+    .side-nav button:hover {
+        background-color: #3d566e; /* Even lighter on hover */
+        border-left: 3px solid #3498db; /* Blue border on hover */
+    }
+    .side-nav button.active {
+        background-color: #2980b9; /* Active state with a blue background */
+        color: white;
+        border-left: 3px solid #3498db; /* Blue border for active state */
+    }
+    .content {
+        margin-left: 250px; /* same as side-nav width */
+        padding: 50px;
+    }
+</style>
+</head>
+<body>
+
+<div class="side-nav">
+    <button onclick="showContent('content1')">Blank Policy End Date</button>
+    <button onclick="showContent('content2')">Blank Policy Effective Date</button>
+    <button onclick="showContent('content3')">PED before PSD</button>
+    <button onclick="showContent('content4')">Blank Premium</button>
+    <button onclick="showContent('content5')">Negative Premium</button>
+    <button onclick="showContent('content6')">Blank UID</button>
+    <button onclick="showContent('content7')">Blank Payment Date</button>
+    <button onclick="showContent('content8')">Blank Loss Date</button>
+    <button onclick="showContent('content12')">Blank Endorsement</button>
+</div>
+
+<div class="content">
+    <div id="content1" class="data">hello</div>
+    <div id="content2" class="data" style="display: none;">{{ dataframe|safe }}</div>
+    <div id="content3" class="data" style="display: none;">Data for Check 3...</div>
+    <!-- ... other content divs ... -->
+</div>
+
+<script>
+    function showContent(contentId) {
+        // Hide all content divs
+        var contents = document.getElementsByClassName('data');
+        for(var i = 0; i < contents.length; i++) {
+            contents[i].style.display = 'none';
+        }
+
+        // Remove 'active' class from all buttons
+        var btns = document.querySelectorAll('.side-nav button');
+        btns.forEach(function(btn){
+            btn.classList.remove('active');
+        });
+
+        // Show the selected content div
+        document.getElementById(contentId).style.display = 'block';
+        
+        // Add 'active' class to the clicked button
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

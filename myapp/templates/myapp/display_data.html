@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dataframe Display</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    p {
+        text-align: center;
+        font-size: 1.1em;
+        color: #666;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    th, td {
+        padding: 12px 15px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+    .summary {
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+    .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .summary-table th, .summary-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .summary-table th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .summary-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .summary-table tr:hover {
+        background-color: #ddd;
+    }
+    h1 {
+        color: #333;
+    }
+    /* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+.hidden {
+    display: none;
+}
+
+
+/* Change background color of buttons on hover */
+
+</style>
+</head>
+<body>
+    {% include 'myapp/navbar.html' %}
+   
+
+    <h1>Updated DataFrame</h1>
+    <table>
+        <thead>
+            <tr>
+                {% for column in dataframe.columns %}
+                    <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, row in dataframe.iterrows %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Render the dataframe directly from the context -->
+    {{ dataframe|safe }}
+
+    
+
+    {% if show_download_link %}
+        <a href="{% url 'download_csv' %}" class="btn btn-primary">Download CSV</a>
+    {% endif %}
+
+    {% if show_download_link %}
+        <a href="{% url 'download_csv1' %}" class="btn btn-primary">Download as UAE Naming Convention</a>
+    {% endif %}
+
+    <h1>Data Summary</h1>
+    <table class="summary-table">
+        <tr>
+            <th>Detail</th>
+            <th>Count</th>
+        </tr>
+        <tr>
+            <td>Total entries</td>
+            <td>{{ original_count }}</td>
+        </tr>
+        <tr>
+            <td>Removed entries</td>
+            <td>{{ removed_count }}</td>
+        </tr>
+        <tr>
+            <td>Total after removal</td>
+            <td>{{ final_count }}</td>
+        </tr>
+        <tr>
+            <td>Number of UID removed</td>
+            <td>{{ UID_count }}</td>
+        </tr>
+        <tr>
+            <td>Number of Entries Blank ENDORESEMENT DATE Not Removed</td>
+            <td>{{ Null_endorsement_count }}</td>
+        </tr>
+
+        <tr>
+            <td>Number of ENDORSEMENT DATES removed DUE TO CONVERSION</td>
+            <td>{{ END_DATE_count }}</td>
+        </tr>
+        <tr>
+            <td>Number of START DATES removed DUE TO CONVERSION</td>
+            <td>{{ START_DATECOUNT }}</td>
+        </tr>
+        <tr>
+            <td>Number of CANCELLATION DATES removed DUE TO CONVERSION</td>
+            <td>{{ CANCELLATION_DATE_COUNT }}</td>
+        </tr>
+        <tr>
+            <td>Number of ENTRIES removed DUE TO PSD > PED</td>
+            <td>{{ GREATER_COUNT }}</td>
+        </tr>
+        <tr>
+            <td>Number of POLICY EFFECTIVE DATE REMOVED DUE TO NULL</td>
+            <td>{{ START_NULL_COUNT }}</td>
+        </tr>
+
+        <tr>
+            <td>Number of POLICY END DATE REMOVED DUE TO NULL</td>
+            <td>{{ END_NULL_COUNT }}</td>
+        </tr>
+
+    </table>
+    
+    {{ dataframe1|safe }}
+
+    {{NULL_UIDS|safe}}
+    <a href="{% url 'download_new_df_csv' %}">Downlaod Updated DF</a>
+    <br>
+    <br>
+    <a href="{% url 'claims_file_upload' %}" class="claims-button">Claims</a>
+    <br>
+    <script>
+        
+        // Get the element with id="defaultOpen" and click on it
+        // document.getElementById("defaultOpen").click();
+        
+    </script>
+</body>
+</html>

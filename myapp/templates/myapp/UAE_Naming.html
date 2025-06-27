@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PROCEED FOR NAMING CONVENTION</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            height: 100px; /* Adjust based on your logo size */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Logo on one side, name on the other */
+            padding: 0 20px; /* Padding on the sides */
+            background-color: #fff; /* Adjust background color as needed */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+
+        
+        .header-content {
+            color: white; /* Adjust text color as needed */
+            text-align: center;
+        }
+    
+        h1, h2 {
+            color: #0044CC; /* Blue color for headers */
+            border-bottom: 1px solid #FFD700; /* Yellow border */
+            padding-bottom: 10px;
+            text-align: center;
+        }
+    
+        form {
+            margin: 20px 0;
+            width: 750px;
+            max-width: 600px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+    
+        button {
+            background-color: #007BFF; /* Blue background for buttons */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        select, input[type="text"], input[type="file"], datalist {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        input[type="file"]::file-selector-button {
+            color: #FFF;
+            background-color: #007BFF; /* Blue background */
+            border: none;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+            text-align: left;
+        }
+    
+        input[type="radio"] {
+            margin: 0 5px 0 0;
+        }
+    
+        #loading {
+            color: #FF0000; /* Red color for loading text */
+            font-weight: bold;
+            text-align: center;
+        }
+    
+        #selected_values_container div, #additional_fields_container div {
+            display: inline-block;
+            background-color: #EEE; /* Light grey background */
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        #selected_values_container div:hover, #additional_fields_container div:hover {
+            background-color: #DDD;
+        }
+    
+        .claims-button {
+            display: block;
+            width: max-content;
+            background-color: #FFD700; /* Yellow background for Claims tab */
+            color: #FFFFFF; /* White text color */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none; /* Remove underline from link */
+        }
+    
+        .claims-button:hover {
+            background-color: #FFC107; /* Slightly darker yellow on hover */
+        }
+        .uploaded-files-info {
+            font-family: Arial, sans-serif;
+            border: 2px solid #4A90E2; /* a soft blue border */
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #E8F0FE; /* a very light blue background */
+        }
+        
+        .uploaded-files-info legend {
+            padding: 0 10px;
+            color: #333;
+            font-weight: bold;
+            background-color: #E8F0FE; /* matching the fieldset background */
+            border-bottom: 1px solid #4A90E2; /* a line under the legend for visual separation */
+        }
+        
+        .uploaded-files-info p {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .uploaded-files-info ul {
+            list-style: none;
+            padding-left: 20px; /* Indent the list a bit */
+            margin-top: 0;
+        }
+        
+        .uploaded-files-info ul li {
+            background-color: #FFFFFF; /* white background for list items */
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+            transition: background-color 0.3s; /* smooth transition for hover effect */
+            font-size: 0.9em;
+        }
+        
+        .uploaded-files-info ul li:hover {
+            background-color: #DDEFFF; /* a slightly different blue on hover */
+        }
+        .form-container {
+            width: 100%; /* Ensures the container fills its parent */
+            max-width: 600px; /* Matches the form max-width for consistency */
+            margin: 20px auto; /* Centers the container */
+            padding: 15px;
+            background-color: #FFFFFF; /* White background for forms */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Aligns children elements to the center */
+        }
+        
+        select, input[type="text"], input[type="file"], datalist, button {
+            width: calc(100% - 20px); /* Adjusts width to account for padding */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Includes padding and border in element's total width */
+        }
+        
+        /* Further adjustments if necessary to align specific elements */
+        #search_input, #unique_values_datalist, #selected_values_container, button {
+            max-width: 750px; /* Adjust based on padding within the .form-container */
+        }
+        #twoColumnsSection {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: #f9f9f9;
+        }
+        
+        #search_input_two_columns {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        /* Selected Values Styling - Adjusted sizes and hover color */
+        #selected_values_container_two_columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* Reduced gap */
+            margin-top: 10px;
+        }
+        
+        .selected-value {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px; /* Reduced padding for smaller size */
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 15px; /* Adjusted for smaller size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 14px; /* Reduced font size */
+        }
+        
+        .selected-value:hover {
+            background-color: #ff0000; /* Changed hover background color to red */
+        }
+        
+        /* Loading Indicator */
+        #loading_two_columns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        /* General enhancements */
+        datalist {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        option {
+            padding: 8px;
+            cursor: pointer;
+        }
+        
+        input[list]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+        .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+        .radio-container {
+            margin: 20px 0;
+            font-size: 14px; /* Smaller text size for compact appearance */
+        }
+        
+        .radio-label {
+            display: inline-block; /* Inline display for horizontal layout */
+            margin-right: 10px; /* Adjust the spacing between the radio options */
+            cursor: pointer; /* Cursor indication for clickable items */
+            position: relative; /* Positioned relatively for absolute positioning of pseudo-elements */
+            padding-left: 30px; /* Space for the custom radio button and outer rectangle */
+            line-height: 1; /* Adjust line height for a compact appearance */
+            color: #000; /* Default text color */
+            transition: color 0.2s; /* Smooth transition for color change */
+        }
+        
+        .radio-label:before, .radio-label:after {
+            content: ''; /* Necessary for pseudo-elements */
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: background-color 0.2s; /* Smooth transition for background color change */
+        }
+        
+        .radio-label:before {
+            left: 5px; /* Positioning from the left, adjusted for outer rectangle */
+            width: 14px; /* Width of the custom radio button */
+            height: 14px; /* Height of the custom radio button */
+            border-radius: 50%; /* Rounded borders for a circle shape */
+            border: 2px solid #007bff; /* Border color */
+        }
+        
+        .radio-label:after {
+            left: 0; /* Outer rectangle aligns with the start of the label */
+            width: 24px; /* Width of the outer rectangle */
+            height: 24px; /* Height of the outer rectangle */
+            border-radius: 5px; /* Slightly rounded corners for the rectangle */
+            border: 1px solid #007bff; /* Border color for the rectangle */
+            z-index: -1; /* Ensure it's behind the pseudo-element for the radio button */
+        }
+        
+        .radio-label input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .radio-label input[type="radio"]:checked + label:before {
+            background-color: #007bff; /* Fill color of the pseudo-element (radio button) on check */
+        }
+        
+        .radio-label input[type="radio"]:checked + label {
+            color: #007bff; /* Change label text color when selected */
+        }
+        .radio-buttons-container {
+            display: flex; /* Aligns the children (input and label pairs) inline */
+            align-items: center; /* Centers the items vertically */
+            gap: 10px; /* Creates a gap between each input-label pair */
+        }
+        
+        .radio-buttons-container label {
+            margin-right: 20px; /* Space after each label */
+            background-color: #f0f0f0; /* Light grey background for the label */
+            padding: 5px 10px; /* Padding around the label text */
+            border-radius: 15px; /* Rounded corners for the label */
+            cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+        }
+        
+        .radio-buttons-container input[type="radio"] {
+            display: none; /* Hides the default radio button */
+        }
+        
+        .radio-buttons-container label:before {
+            content: ''; /* Creates a custom radio button */
+            display: inline-block;
+            margin-right: 5px; /* Space before the label text */
+            width: 14px; /* Width of the custom radio button */
+            height: 14px; /* Height of the custom radio button */
+            border-radius: 50%; /* Makes it circular */
+            border: 2px solid #007bff; /* Border color of the custom radio button */
+            background-color: #fff; /* Background color of the custom radio button */
+        }
+        
+        .radio-buttons-container input[type="radio"]:checked + label:before {
+            background-color: #007bff; /* Fill the custom radio button when selected */
+        }
+        fieldset {
+            border: 2px solid #007bff; /* Blue border for the fieldset */
+            border-radius: 8px; /* Rounded corners for the fieldset */
+            padding: 20px; /* Padding inside the fieldset */
+            margin: 20px 0; /* Margin around the fieldset for spacing */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        #loading {
+            display: none;
+        }
+        #unique-values-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .value-count {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .value-count:hover {
+            background-color: #dde2e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          
+          table, th, td {
+            border: 1px solid #ddd;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          
+          th {
+            background-color: #f2f2f2;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+          
+          #loading {
+            display: none;
+            color: #666;
+            margin-top: 10px;
+          }
+          
+          .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+          
+          
+        
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <a href="{% url 'display_results' %}" class="display-results">Premium Results</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">Claims Results</a>
+        <a href="{% url 'display_os_results' %}" class="display-os-results">OS Results</a>
+        <a href="{% url 'upload_and_display' %}" class="upload">Upload Premium Files</a>
+        <a href="{% url 'claims_file_upload' %}" class="claims-button">Upload Claims Files</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">Upload OS Files</a>
+        <a href="{% url 'upload_mapping' %}" class="upload_mapping">Mapping Section</a>
+        <a href="{% url 'mapping_upload' %}" class="mapping_upload">Upload Mapping</a>
+        <a href="{% url 'Naming_Convention' %}" class="Naming_Convention">UAE NAMING</a>
+        <a href="{% url 'mapping_upload' %}" class="mapping_upload">→</a>
+        
+    </div>
+    <br>
+    <br>
+    {% comment %} <div>
+        <h1>PROCEED FOR NAMING-CONVENTION</h1>
+    
+        {% if is_merged %}
+        <div style="display: flex; justify-content: center; gap: 20px;">
+            <!-- Left Table -->
+            <table style="width: 60%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select a Column</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select an Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for column in left_columns %}
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="column_select_{{ forloop.counter }}" id="column_select_{{ forloop.counter }}" style="width: 100%;">
+                                <option value="">--Select a column--</option>
+                                <option value="{{ column }}" selected>{{ column }}</option>
+                            </select>
+                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="dropdown_b_{{ forloop.counter }}" id="dropdown_b_{{ forloop.counter }}" style="width: 100%;">
+                                <option value="">--Select an option--</option>
+                                <option value="a">a</option>
+                                <option value="b">b</option>
+                                <option value="c">c</option>
+                                <option value="d">d</option>
+                                <option value="e">e</option>
+                                <option value="f">f</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+            <!-- Right Table -->
+            <table style="width: 60%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select a Column</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select an Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for column in right_columns %}
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="column_select_{{ forloop.counter|add:left_columns|length }}" id="column_select_{{ forloop.counter|add:left_columns|length }}" style="width: 100%;">
+                                <option value="">--Select a column--</option>
+                                <option value="{{ column }}" selected>{{ column }}</option>
+                            </select>
+                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="dropdown_b_{{ forloop.counter|add:left_columns|length }}" id="dropdown_b_{{ forloop.counter|add:left_columns|length }}" style="width: 100%;">
+                                <option value="">--Select an option--</option>
+                                <option value="a">a</option>
+                                <option value="b">b</option>
+                                <option value="c">c</option>
+                                <option value="d">d</option>
+                                <option value="e">e</option>
+                                <option value="f">f</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <button id="proceed-button" onclick="proceedAction()">Proceed</button>
+        </div>
+        {% else %}
+        <p>Data is not available. Please complete the Outstanding section.</p>
+        {% endif %}
+    </div> {% endcomment %}
+    <div>
+        <h1>PROCEED FOR NAMING-CONVENTION</h1>
+
+        {% if is_merged %}
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; padding: 10px 20px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <!-- Dropdown for MOTOR or MEDICAL selection -->
+            <label for="category_select" style="font-weight: bold; font-size: 1.2em; color: #333;">Select Category:</label>
+            <select id="category_select" onchange="updateOptions()" style="padding: 10px 15px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em; background-color: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);">
+                <option value="MOTOR">MOTOR</option>
+                <option value="MEDICAL">MEDICAL</option>
+            </select>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 20px;">
+            <!-- Left Table -->
+            <table style="width: 60%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select a Column</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select an Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for column in left_columns %}
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="left_column_select_{{ forloop.counter }}" id="left_column_select_{{ forloop.counter }}" style="width: 100%;">
+                                <option value="">--Select a column--</option>
+                                <option value="{{ column }}" selected>{{ column }}</option>
+                            </select>
+                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="left_dropdown_b_{{ forloop.counter }}" id="left_dropdown_b_{{ forloop.counter }}" style="width: 100%;">
+                                <!-- Options will be dynamically updated by JavaScript -->
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Right Table -->
+            <table style="width: 60%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select a Column</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Select an Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for column in right_columns %}
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="right_column_select_{{ forloop.counter }}" id="right_column_select_{{ forloop.counter }}" style="width: 100%;">
+                                <option value="">--Select a column--</option>
+                                <option value="{{ column }}" selected>{{ column }}</option>
+                            </select>
+                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <select name="right_dropdown_b_{{ forloop.counter }}" id="right_dropdown_b_{{ forloop.counter }}" style="width: 100%;">
+                                <!-- Options will be dynamically updated by JavaScript -->
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 20px; display: flex; justify-content: center;;">
+            <button id="proceed-button" onclick="proceedAction()">Download Updated Data</button>
+        </div>
+        {% else %}
+        <p>Data is not available. Please complete the Outstanding section.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function updateOptions() {
+            const category = document.getElementById('category_select').value;
+            let options;
+
+            if (category === 'MOTOR') {
+                options = ['UID', 'PolicyNo', 'UY', 'PolicyInsured', 'RIPremium', 'VehicleModel', 'VehicleBody', 'VehicleUsage', '[CP/TP]', '[CP/TP/Fleet]', 'SumInsuredBands', 'SumInsuredBandsGraph', 'DurationBand', 'RepairCondition', 'NoCylender', 'CPBodyType', 'TPBodyType', 'CP_Flexi1', 'CP_Flexi2', 'CP_Flexi3', 'CP_Flexi4', 'CP_Flexi5', 'CP_Flexi6', 'CP_Flexi7', 'CP_Flexi8', 'CP_Flexi9', 'CP_Flexi10', 'TP_Flexi1', 'TP_Flexi2', 'TP_Flexi3', 'TP_Flexi4', 'TP_Flexi5', 'TP_Flexi6', 'TP_Flexi7', 'TP_Flexi8', 'TP_Flexi9', 'TP_Flexi10', 'FileName', 'Product_Type', 'Fleet_Individual', 'Distribution_Channel', 'Driver_Nationality', 'Driver_Age', 'Driver_DOB', 'Vehicle_Origin', 'Policy_Region', 'Vehicle_Region', 'Vehicle_Seating_Capacity', 'Compnay_Name', 'Driver_Gender', 'Marital_Status', 'New_Renewal', 'NCD_Discount_Applicable', 'Loyality_Discount', 'Deductable', 'filename', 'ClaimsLOB', 'ClaimNo', 'LossDate', 'PaidDate', 'GrossClaimsPaid', 'GrossPaid', 'PaidRecovery', 'RIClaimsPaid', 'GrossOutstanding', 'OutstandingRecovery', 'GrossClaimsOutstanding', 'RIClaimsOutstanding', 'ClaimsFlexi1', 'ClaimsFlexi2', 'ClaimsFlexi3', 'ClaimsFlexi4', 'Claims_FileName', 'Reporting_Date', 'Claims_Estimate_Description', 'Claims_Estimate_Type', 'Claim_Type', 'Repair_Condition', 'At_Fault_Not_At_Fault', 'Claim_Status', 'GrossPremium', 'VehicleMake', 'VehicleYear', 'Cylinder', 'PrivateCommercial', 'FLEET_FLAG'];
+            } else if (category === 'MEDICAL') {
+                options = [
+                    "ClaimsTpa", "ClaimNo", "LossDate", "PaidDate", "GrossClaimsPaid", 
+                    "RIClaimsPaid", "GrossClaimsOutstanding", "RIClaimsOutstanding", "ReportedClaim", 
+                    "UID", "ClaimsFlexi1", "ClaimsFlexi2", "ClaimsFlexi3", "Client_Name_Claim", 
+                    "Insured_Name_Claim", "Policy_Number_Claim", "Card_Number_Claim", 
+                    "Provider_Name", "Provider_Network", "Provider_City", "Provider_Type", 
+                    "Pre_Existing_Condition", "Chronic_flag", "Benefit_Type", "FOB", "ICD_Code", 
+                    "ICD_Code_Description", "CPT_Code_Procedure_Code", "CPT_Description", 
+                    "Treatment_Start_Date", "Discharge_Date", "Intimation_Date", 
+                    "Reporting_Authority_Claim", "Invoice_Number", "Discount_Amount", 
+                    "Deductible_Amount", "Deduction_Amount", "Claim_Status", "Claim_Type", 
+                    "Units", "Billed_Amount", "Provider_Group", "Activity_Category", 
+                    "Health_Authority", "Doctor_Code", "Doctor_Name", "Doctor_Speciality", 
+                    "Recovery_Amount", "Coinsurance_Amount", "Discount_Percentage", 
+                    "Deductible_Percentage", "Deduction_Percentage", "Coinsurance_Percentage", 
+                    "Recovery_Reason", "Claims_FileName"
+                ];
+            }
+
+            // Update options for left table
+            const leftRowsCount = {{ left_columns|length }};
+            for (let i = 1; i <= leftRowsCount; i++) {
+                const dropdown = document.getElementById(`left_dropdown_b_${i}`);
+                dropdown.innerHTML = ''; // Clear previous options
+
+                // Add the new options
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '--Select an option--';
+                dropdown.appendChild(defaultOption);
+
+                options.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    dropdown.appendChild(opt);
+                });
+            }
+
+            // Update options for right table
+            const rightRowsCount = {{ right_columns|length }};
+            for (let i = 1; i <= rightRowsCount; i++) {
+                const dropdown = document.getElementById(`right_dropdown_b_${i}`);
+                dropdown.innerHTML = ''; // Clear previous options
+
+                // Add the new options
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '--Select an option--';
+                dropdown.appendChild(defaultOption);
+
+                options.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    dropdown.appendChild(opt);
+                });
+            }
+        }
+
+        function proceedAction() {
+            let selectedColumns = [];
+            let selectedOptions = [];
+
+            // Calculate total rows from left_columns and right_columns
+            const rowsCount = {{ left_columns|length }} + {{ right_columns|length }};
+            console.log(`Total number of rows: ${rowsCount}`);
+
+            for (let i = 1; i <= rowsCount; i++) {
+                let columnElement;
+                let optionElement;
+
+                if (i <= {{ left_columns|length }}) {
+                    columnElement = document.getElementById(`left_column_select_${i}`);
+                    optionElement = document.getElementById(`left_dropdown_b_${i}`);
+                } else {
+                    const rightIndex = i - {{ left_columns|length }};
+                    columnElement = document.getElementById(`right_column_select_${rightIndex}`);
+                    optionElement = document.getElementById(`right_dropdown_b_${rightIndex}`);
+                }
+
+                if (!columnElement || !optionElement) {
+                    console.log(`Row ${i}: Element not found, skipping...`);
+                    continue;
+                }
+
+                let column = columnElement.value;
+                let option = optionElement.value;
+                console.log(`Row ${i}: Selected column - ${column}, Selected option - ${option}`);
+
+                // Only add to the lists if an option (a, b, c, etc.) is selected
+                if (option) {
+                    selectedColumns.push(column);
+                    selectedOptions.push(option);
+                    console.log(`Added: Column - ${column}, Option - ${option}`);
+                } else {
+                    console.log(`Skipped: No option selected for column - ${column}`);
+                }
+            }
+
+            console.log("Final selected columns:", selectedColumns);
+            console.log("Final selected options:", selectedOptions);
+
+            if (selectedOptions.length === 0) {
+                alert('Please select at least one option from the dropdowns.');
+                return;
+            }
+
+            console.log("Proceeding with the fetch request...");
+
+            // Send the selected columns and their new names to the server
+            fetch('/myapp/update_and_download/', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    'selected_columns': selectedColumns, 
+                    'new_column_names': selectedOptions 
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF token is correctly obtained
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                console.log("Download initiated...");
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'updated_data.csv';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch(error => console.error('Error downloading CSV file:', error));
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Initialize options when the page loads
+        window.onload = updateOptions;
+  
+    
+        
+        
+        
+        
+        
+        
+        function updateSelectedList(column) {
+            var list = document.getElementById('selected-columns-list');
+            var listItem = document.createElement('li');
+            listItem.style = "padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px; display: flex; align-items: center;";
+            
+            var columnText = document.createElement('span');
+            columnText.textContent = column;
+            listItem.appendChild(columnText);
+            
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'x';
+            deleteButton.style = "margin-left: 10px; cursor: pointer; background: none; border: none; color: red;";
+            deleteButton.onclick = function() {
+                // Remove the element from the DOM
+                list.removeChild(listItem);
+                // Remove the column name from the selectedColumns array
+                const index = selectedColumns.indexOf(column);
+                if (index > -1) {
+                    selectedColumns.splice(index, 1);
+                }
+                console.log("Updated selections after deletion:", selectedColumns);
+            };
+            listItem.appendChild(deleteButton);
+            list.appendChild(listItem);
+        }
+        
+        
+
+        let selectedColumns = [];
+
+        function getUniqueValues() {
+            var selectedColumn = document.querySelector('select[name="column_select"]').value;
+            if (selectedColumn && !selectedColumns.includes(selectedColumn)) {
+                selectedColumns.push(selectedColumn);  // Add to global array if not already included
+                updateSelectedList(selectedColumn);  // Assuming this updates the UI list
+            }
+            console.log("Current selections:", selectedColumns);
+        }
+
+        function downloadSelectedData() {
+            console.log("Downloading data for columns:", selectedColumns);
+
+            if (selectedColumns.length === 0) {
+                alert('No columns selected for download.');
+                return;
+            }
+
+            fetch('/myapp/download_excel/', {
+                method: 'POST',
+                body: JSON.stringify({ 'selected_columns': selectedColumns }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Make sure CSRF token is correctly obtained
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'selected_data.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch(error => console.error('Error downloading Excel file:', error));
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+    </script>
+</body>
+</html>
+
