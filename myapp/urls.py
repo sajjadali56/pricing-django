@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 urlpatterns = [
+    path('', views.merge_and_display, name='upload_and_display'),
     path('upload/', views.merge_and_display, name='upload_and_display'),
     path('upload_mapping/', views.upload_mapping, name='upload_mapping'),
     path('update_and_download/', views.update_and_download, name='update_and_download'),
