@@ -62,6 +62,7 @@ Run the following commands **one by one** in the same Command Prompt window:
 python -m pip install pipenv
 pipenv shell
 pipenv install
+python manage.py migrate
 python manage.py runserver
 ```
 
