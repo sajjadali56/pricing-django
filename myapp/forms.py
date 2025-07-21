@@ -4,7 +4,12 @@ class CSVFileUploadForm1(forms.Form):
     files = forms.FileField(widget=forms.ClearableFileInput(), required=False)
     files.widget.attrs.update({'multiple': True})
 
-from django import forms
+    def clean_files(self):
+        files = self.cleaned_data.get('files')
+        if not files:
+            raise forms.ValidationError('Please upload at least one file.')
+        return files   
+    
 
 class ExcelUploadForm(forms.Form):
     mapping_file = forms.FileField(

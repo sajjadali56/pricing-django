@@ -49,7 +49,12 @@ def os_file_upload(request):
             dataframes = []
             
             for file in files:
-                df = pd.read_csv(file)
+                # df = pd.read_csv(file)
+                if file.name.endswith('.csv'):
+                    df = pd.read_csv(file)
+                else:
+                    df = pd.read_excel(file)
+
                 num_entries = len(df)
                 total_entries += num_entries  # Add to total entries
                 file_details.append({'name': file.name, 'entries': num_entries})
@@ -267,6 +272,10 @@ def process_os_data(request):
 
         claims_data = request.session.get('No_Claim_df')
 
+        
+        print("Session Debugging here claim_data", claims_data)
+
+
         if claims_data:
             if claimId_available:
                 claims_data = pd.read_json(claims_data, orient='split')
@@ -307,6 +316,7 @@ def process_os_data(request):
             print(claims_data)
             print(No_Claim_df)
 
+        print("Debugging here claim_data", claims_data.head())
         if not claims_data.empty:
             print("data of claims ",claims_data.head())
             print("data of Os ",No_Claim_df.head())
@@ -597,7 +607,12 @@ def claims_file_upload(request):
             dataframes = []
             
             for file in files:
-                df = pd.read_csv(file)
+                # df = pd.read_csv(file)
+                if file.name.endswith('.csv'):
+                    df = pd.read_csv(file)
+                else:
+                    df = pd.read_excel(file)
+
                 num_entries = len(df)
                 total_entries += num_entries  # Add to total entries
                 file_details.append({'name': file.name, 'entries': num_entries})
@@ -1282,7 +1297,10 @@ def merge_and_display(request):
             dataframes = []
             
             for file in files:
-                df = pd.read_csv(file)
+                if file.name.endswith('.csv'):
+                    df = pd.read_csv(file)
+                else:
+                    df = pd.read_excel(file)
                 num_entries = len(df)
                 total_entries += num_entries  # Add to total entries
                 file_details.append({'name': file.name, 'entries': num_entries})
@@ -2093,6 +2111,7 @@ def process_data(request):
             final_df['POLICY_END_DATE'] = final_df['POLICY_END_DATE'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 
+            final_df[endorsement_date_col] = pd.to_datetime(final_df[endorsement_date_col]) # sajjad's code
             final_df[endorsement_date_col] = final_df[endorsement_date_col].dt.strftime(translated_format)
             print(final_df['POLICY_START_DATE'].iloc[0])
             final_df['POLICY_START_DATE'] = final_df['POLICY_START_DATE'].dt.strftime(translated_format)
