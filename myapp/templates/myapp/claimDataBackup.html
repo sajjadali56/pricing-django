@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Claim Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: white;
+            padding-top: 60px; /* Space for the navbar */
+        }
+
+        /* Navbar styling */
+        .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .tab button:hover, .tab a:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+
+        /* Sidebar styling */
+        .side-nav {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: -220px; /* Start offscreen */
+            height: 100%;
+            background-image: linear-gradient(to bottom, #0567a6, #034d7a); /* Blue gradient */
+            overflow-x: hidden;
+            padding-top: 60px; /* Height of the navbar */
+            transition: left 0.5s; /* Smooth sliding effect */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-nav button {
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: white;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid #034f84; /* Dark blue border for separation */
+        }
+
+        .side-nav button:last-child {
+            border-bottom: none; /* Remove border for the last button */
+        }
+
+        .side-nav button:hover {
+            background-color: #FBD185; /* Golden for hover */
+            color: #0567a6; /* Blue text */
+        }
+
+        .side-nav button.active {
+            background-color: #034f84; /* Darker blue for active */
+            color: white;
+        }
+
+        /* Content styling */
+        .content {
+            padding: 20px;
+            margin-left: 220px; /* Same as the sidebar width */
+            transition: margin-left 0.5s; /* Smooth transition for content margin */
+        }
+
+        .data {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hide each content block */
+            overflow-x: auto; /* Allows scrolling for wide tables */
+        }
+
+        /* Styling for tables within data divs */
+        .data table {
+            width: 100%;
+            border-collapse: collapse; /* Removes gaps between cells */
+            margin: 20px 0; /* Adds margin around the table */
+        }
+
+        .data th, .data td {
+            border: 1px solid #ddd; /* Light border for cells */
+            padding: 8px; /* Padding inside cells */
+            text-align: left; /* Align text to left */
+        }
+
+        .data th {
+            background-color: #0567a6; /* Header background */
+            color: white; /* Text color for headers */
+        }
+
+        .data tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra-striping for rows */
+        }
+
+        .data tr:hover {
+            background-color: #ddd; /* Hover effect for rows */
+        }
+        .data table {
+            width: 100%;
+            border-collapse: collapse; /* Removes gaps between cells */
+            margin: 20px 0; /* Adds margin around the table */
+        }
+        .data th, .data td {
+            border: 1px solid #ddd; /* Light border for cells */
+            padding: 8px; /* Padding inside cells */
+            text-align: left; /* Align text to left */
+        }
+        .data th {
+            background-color: #0567a6; /* Header background */
+            color: white; /* Text color for headers */
+        }
+        .data tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra-striping for rows */
+        }
+        .data tr:hover {
+            background-color: #ddd; /* Hover effect for rows */
+        }
+        .data-length {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+            font-weight: bold;
+            border: 2px solid #007bff; /* Example: 2px solid blue border */
+            padding: 8px; /* Add some padding inside the border */
+            border-radius: 5px; /* Optional: adds rounded corners to the border */
+        }
+        
+    
+        .download-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+    
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <button class="tablinks" onclick="goBack()">HOME</button>
+        <a href="#" class="tablinks" id="premium-checks-button">CLAIM CHECKS</a>
+        <a href="{% url 'display_results' %}" class="display-results">PREMIUM RESULTS</a>
+        <a href="{% url 'display_claims_results' %}" class="display-claims-results">CLAIMS RESULTS</a>
+        <a href="{% url 'display_os_results' %}" class="display-os-results">OS RESULTS</a>
+        <a href="{% url 'upload_and_display' %}" class="upload">UPLOAD PREMIUM FILES</a>
+        <a href="{% url 'claims_file_upload' %}" class="claims-button">UPLOAD CLAIMS FILES</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">UPLOAD OS FILES</a>
+        <a href="{% url 'upload_mapping' %}" class="upload_mapping">MAPPING SECTION</a>
+        <a href="{% url 'mapping_upload' %}" class="mapping_upload">UPLOAD MAPPING</a>
+        <a href="{% url 'Naming_Convention' %}" class="Naming_Convention">UAE NAMING</a>
+        <a href="{% url 'os_file_upload' %}" class="claims-button">→</a>
+    </div>
+    <br>
+    <br>
+    
+    
+    <div class="side-nav">
+        <!-- Side navigation buttons -->
+        <button onclick="showContent('content2')">Blank Loss Date</button>
+        <button onclick="showContent('content4')">Negative Claims</button>
+        <button onclick="showContent('content5')">1 to Many Mapping Claims</button>
+        <button onclick="showContent('content6')">Orphan Claims</button>
+        
+
+
+        <!-- ... other buttons ... -->
+    </div>
+    
+    <div class="content">
+        <div id="initial-content" class="data" style="display: block;">
+            <h1>Data Summary</h1>
+            <table class="summary-table">
+                <tr>
+                    <th>Detail</th>
+                    <th>Count</th>
+                </tr>
+                <tr>
+                    <td>Total entries</td>
+                    <td>{{ Total_Entries1 }}</td>
+                </tr>
+                <tr>
+                    <td>Number ClaimPaid NaN Entries Removed</td>
+                    <td>{{ NaN_Claim }}</td>
+                </tr>
+                <tr>
+                    <td>Total Entries After Removal</td>
+                    <td>{{ Total_after1 }}</td>
+                </tr>
+
+            </table>
+            <h2>RESULTS AFTER PROCESSING</h2>
+            <!-- Render the DataFrame HTML table -->
+            {% if df_html %}
+                <div class="table-responsive">
+                    {{ df_html|safe }}
+                </div>
+            {% else %}
+                <p>No data available to display.</p>
+            {% endif %}
+            <br>
+            <!-- Display download button if DataFrame is ready -->
+            {% if download_ready %}
+                <form action="{% url 'download_data' %}" method="GET">
+                    <button type="submit">Download Data</button>
+                </form>
+                <form action="{% url 'download_data_UAE' %}" method="GET">
+                    <button type="submit">Download Data as UAE Naming Convention</button>
+                </form>
+            {% else %}
+                <p>Data is not ready for download.</p>
+            {% endif %}
+            <br>
+            <h2>ADDING CLAIM COUNT, PERIOD AND SUM</h2>
+            <div>
+                {{ grouped_df_html|safe }}
+            </div>
+            <br>
+            <h2>CONSOLIDATION RESULTS</h2>
+            <div>
+                {{ new_df_html|safe }}
+            <br>
+            <!-- Display download button if DataFrame is ready -->
+            {% if download_ready %}
+                <form action="{% url 'consol_download' %}" method="GET">
+                    <button type="submit">Download Data</button>
+                </form>
+            {% else %}
+                <p>Data is not ready for download.</p>
+            {% endif %}
+            <br>
+            </div>
+        </div>    
+        <!-- Content divs -->
+        {% comment %} <div id="content1" class="data">{{BlankPDate|safe}}</div> {% endcomment %}
+        <div id="content2" class="data">
+            <p class="data-length">Number Of Null Loss Dates: {{ NullLossDate_len}}</p>
+            {{ NullLossDate|safe }}
+            <a href="{% url 'download_checks' %}?name=NullLossDate" class="download-btn">Download</a>
+        </div>
+        <div id="content4" class="data">
+            <p class="data-length">Number Of Negative Claim Entries: {{ negative_claim_entries_len}}</p>
+            {{ negative_claim_entries|safe }}
+            <a href="{% url 'download_checks' %}?name=negative_claim_entries" class="download-btn">Download</a>
+        </div>
+        <div id="content5" class="data">
+            <p class="data-length">Number Of One to One Map: {{ one_to_one_len}}</p>
+            {{ one_to_one|safe }}
+            <a href="{% url 'download_checks' %}?name=one_to_one" class="download-btn">Download</a>
+        </div>
+        <div id="content6" class="data">
+            <p class="data-length">Orphan Claims: {{ orphan_uids_len}}</p>
+            {{ orphan_claims|safe }}
+            <a href="{% url 'download_checks' %}?name=orphan_claims" class="download-btn">Download</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state
+            goBack();
+    
+            document.getElementById('premium-checks-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                toggleSidebar();
+            });
+    
+            // Add event listener for the Home button
+            document.getElementById('home-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                goBack();
+            });
+        });
+    
+        function showContent(contentId) {
+            // Hide all content divs first
+            var contents = document.querySelectorAll('.content .data');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+        
+            // Then display the selected content
+            var selectedContent = document.getElementById(contentId);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+        
+            // Hide initial content if any other content is selected
+            document.getElementById('initial-content').style.display = 'none';
+        }
+        
+    
+        function isSidebarOpen() {
+            var sideNav = document.querySelector('.side-nav');
+            return sideNav.style.left === '0px';
+        }
+    
+        function toggleSidebar() {
+            var sideNav = document.querySelector('.side-nav');
+            var contentDivs = document.querySelector('.content');
+            if (sideNav.style.left === '0px') {
+                closeSidebar();
+                contentDivs.style.marginLeft = '0px'; // Full width when sidebar is closed
+            } else {
+                sideNav.style.left = '0px';
+                contentDivs.style.marginLeft = '220px'; // Adjust for sidebar
+            }
+        }
+    
+        function goBack() {
+            closeSidebar();
+            // Hide all content divs and show only the initial content
+            var contents = document.querySelectorAll('.content .data');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+            document.getElementById('initial-content').style.display = 'block';
+        }
+    
+        function closeSidebar() {
+            var sideNav = document.querySelector('.side-nav');
+            var contentDivs = document.querySelector('.content');
+            sideNav.style.left = '-220px';
+            contentDivs.style.marginLeft = '0px';
+        }
+    </script>
+    
+    
+
+    
+</body>
+</html>
+
+

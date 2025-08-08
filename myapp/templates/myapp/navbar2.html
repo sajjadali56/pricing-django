@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link tablinks" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link tablinks" id="premium-checks-button">Claim Checks</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="UploadsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Uploads
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="UploadsDropdown">
+                            <li><a href="{% url 'upload_and_display' %}" class="dropdown-item upload">Upload Premium Files</a></li>
+                            <li><a href="{% url 'claims_file_upload' %}" class="dropdown-item claims-button">Upload Claims Files</a></li>
+                            <li><a href="{% url 'os_file_upload' %}" class="dropdown-item claims-button">Upload OS Files</a></li>
+                            <li><a href="{% url 'upload_mapping' %}" class="dropdown-item upload_mapping">Mapping Section</a></li>
+                            <li><a href="{% url 'mapping_upload' %}" class="dropdown-item mapping_upload">Upload Mapping</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="ResultsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Results
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ResultsDropdown">
+                            <li><a href="{% url 'display_results' %}" class="dropdown-item display-results">Premium Results</a></li>
+                            <li><a href="{% url 'display_claims_results' %}" class="dropdown-item display-claims-results">Claims Results</a></li>
+                            <li><a href="{% url 'display_os_results' %}" class="dropdown-item display-os-results">OS Results</a></li>
+                            <li><a href="{% url 'Naming_Convention' %}" class="dropdown-item Naming_Convention">Naming</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'os_file_upload' %}" class="nav-link claims-button">→</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>

@@ -1,0 +1,733 @@
+body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            height: 100px; /* Adjust based on your logo size */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Logo on one side, name on the other */
+            padding: 0 20px; /* Padding on the sides */
+            background-color: #fff; /* Adjust background color as needed */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+
+        
+        .header-content {
+            color: white; /* Adjust text color as needed */
+            text-align: center;
+        }
+    
+        h1, h2 {
+            color: #0044CC; /* Blue color for headers */
+            border-bottom: 1px solid #FFD700; /* Yellow border */
+            padding-bottom: 10px;
+            text-align: center;
+        }
+    
+        form {
+            margin: 20px 0;
+            width: 750px;
+            max-width: 600px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+
+        /* Custom Navbar Styling */
+        .navbar-custom {
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-custom .navbar-nav {
+            justify-content: center; /* Center the menu items */
+            width: 100%; /* Ensure the nav items take full width for centering */
+        }
+
+        .navbar-custom .nav-item {
+            margin: 0 15px; /* Add spacing between nav links */
+        }
+
+        .navbar-custom .nav-link, .navbar-custom .dropdown-item {
+            color: white;
+            font-size: 20px;
+            padding: 16px 30px;
+            text-decoration: none;
+        }
+
+        .navbar-custom .nav-link:hover, .navbar-custom .dropdown-item:hover {
+            color: #050505; /* Blue text */
+        }
+
+        .navbar-custom .nav-link.active, .navbar-custom .dropdown-item.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+
+        .navbar-custom .dropdown-menu {
+            background-color: #034d7a; /* Match navbar gradient */
+            border: none;
+        }
+
+        /* Sidebar styling */
+        .side-nav {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: -220px; /* Start offscreen */
+            height: 100%;
+            background-image: linear-gradient(to bottom, #0567a6, #034d7a); /* Blue gradient */
+            overflow-x: hidden;
+            padding-top: 60px; /* Height of the navbar */
+            transition: left 0.5s; /* Smooth sliding effect */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-nav button {
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: white;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid #034f84; /* Dark blue border for separation */
+        }
+
+        .side-nav button:last-child {
+            border-bottom: none; /* Remove border for the last button */
+        }
+
+        .side-nav button:hover {
+            color: #0567a6; /* Blue text */
+        }
+
+        .side-nav button.active {
+            background-color: #034f84; /* Darker blue for active */
+            color: white;
+        }
+    
+        button {
+            background-color: #007BFF; /* Blue background for buttons */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        select, input[type="text"], input[type="file"], datalist {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        input[type="file"]::file-selector-button {
+            color: #FFF;
+            background-color: #007BFF; /* Blue background */
+            border: none;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+            text-align: left;
+        }
+    
+        input[type="radio"] {
+            margin: 0 5px 0 0;
+        }
+    
+        #loading {
+            color: #FF0000; /* Red color for loading text */
+            font-weight: bold;
+            text-align: center;
+        }
+    
+        #selected_values_container div, #additional_fields_container div {
+            display: inline-block;
+            background-color: #EEE; /* Light grey background */
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        #selected_values_container div:hover, #additional_fields_container div:hover {
+            background-color: #DDD;
+        }
+    
+        .claims-button {
+            display: block;
+            width: max-content;
+            color: #FFFFFF; /* White text color */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none; /* Remove underline from link */
+        }
+    
+        .uploaded-files-info {
+            font-family: Arial, sans-serif;
+            border: 2px solid #4A90E2; /* a soft blue border */
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #E8F0FE; /* a very light blue background */
+        }
+        
+        .uploaded-files-info legend {
+            padding: 0 10px;
+            color: #333;
+            font-weight: bold;
+            background-color: #E8F0FE; /* matching the fieldset background */
+            border-bottom: 1px solid #4A90E2; /* a line under the legend for visual separation */
+        }
+        
+        .uploaded-files-info p {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .uploaded-files-info ul {
+            list-style: none;
+            padding-left: 20px; /* Indent the list a bit */
+            margin-top: 0;
+        }
+        
+        .uploaded-files-info ul li {
+            background-color: #FFFFFF; /* white background for list items */
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+            transition: background-color 0.3s; /* smooth transition for hover effect */
+            font-size: 0.9em;
+        }
+        
+        .uploaded-files-info ul li:hover {
+            background-color: #DDEFFF; /* a slightly different blue on hover */
+        }
+        .form-container {
+            width: 100%; /* Ensures the container fills its parent */
+            max-width: 600px; /* Matches the form max-width for consistency */
+            margin: 20px auto; /* Centers the container */
+            padding: 15px;
+            background-color: #FFFFFF; /* White background for forms */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Aligns children elements to the center */
+        }
+        
+        select, input[type="text"], input[type="file"], datalist, button {
+            width: calc(100% - 20px); /* Adjusts width to account for padding */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Includes padding and border in element's total width */
+        }
+        
+        /* Further adjustments if necessary to align specific elements */
+        #search_input, #unique_values_datalist, #selected_values_container, button {
+            max-width: 750px; /* Adjust based on padding within the .form-container */
+        }
+        #twoColumnsSection {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: #f9f9f9;
+        }
+        
+        #search_input_two_columns {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        /* Selected Values Styling - Adjusted sizes and hover color */
+        #selected_values_container_two_columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* Reduced gap */
+            margin-top: 10px;
+        }
+        
+        .selected-value {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px; /* Reduced padding for smaller size */
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 15px; /* Adjusted for smaller size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 14px; /* Reduced font size */
+        }
+        
+        .selected-value:hover {
+            background-color: #ff0000; /* Changed hover background color to red */
+        }
+        
+        /* Loading Indicator */
+        #loading_two_columns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        /* General enhancements */
+        datalist {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        option {
+            padding: 8px;
+            cursor: pointer;
+        }
+        
+        input[list]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+        .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+        .radio-container {
+            margin: 20px 0;
+            font-size: 14px; /* Smaller text size for compact appearance */
+        }
+        
+        .radio-label {
+            display: inline-block; /* Inline display for horizontal layout */
+            margin-right: 10px; /* Adjust the spacing between the radio options */
+            cursor: pointer; /* Cursor indication for clickable items */
+            position: relative; /* Positioned relatively for absolute positioning of pseudo-elements */
+            padding-left: 30px; /* Space for the custom radio button and outer rectangle */
+            line-height: 1; /* Adjust line height for a compact appearance */
+            color: #000; /* Default text color */
+            transition: color 0.2s; /* Smooth transition for color change */
+        }
+        
+        .radio-label:before, .radio-label:after {
+            content: ''; /* Necessary for pseudo-elements */
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: background-color 0.2s; /* Smooth transition for background color change */
+        }
+        
+        .radio-label:before {
+            left: 5px; /* Positioning from the left, adjusted for outer rectangle */
+            width: 14px; /* Width of the custom radio button */
+            height: 14px; /* Height of the custom radio button */
+            border-radius: 50%; /* Rounded borders for a circle shape */
+            border: 2px solid #007bff; /* Border color */
+        }
+        
+        .radio-label:after {
+            left: 0; /* Outer rectangle aligns with the start of the label */
+            width: 24px; /* Width of the outer rectangle */
+            height: 24px; /* Height of the outer rectangle */
+            border-radius: 5px; /* Slightly rounded corners for the rectangle */
+            border: 1px solid #007bff; /* Border color for the rectangle */
+            z-index: -1; /* Ensure it's behind the pseudo-element for the radio button */
+        }
+        
+        .radio-label input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .radio-label input[type="radio"]:checked + label:before {
+            background-color: #007bff; /* Fill color of the pseudo-element (radio button) on check */
+        }
+        
+        .radio-label input[type="radio"]:checked + label {
+            color: #007bff; /* Change label text color when selected */
+        }
+        .radio-buttons-container {
+            display: flex; /* Aligns the children (input and label pairs) inline */
+            align-items: center; /* Centers the items vertically */
+            gap: 10px; /* Creates a gap between each input-label pair */
+        }
+        
+        .radio-buttons-container label {
+            margin-right: 20px; /* Space after each label */
+            background-color: #f0f0f0; /* Light grey background for the label */
+            padding: 5px 10px; /* Padding around the label text */
+            border-radius: 15px; /* Rounded corners for the label */
+            cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+        }
+        
+        .radio-buttons-container input[type="radio"] {
+            display: none; /* Hides the default radio button */
+        }
+        
+        .radio-buttons-container label:before {
+            content: ''; /* Creates a custom radio button */
+            display: inline-block;
+            margin-right: 5px; /* Space before the label text */
+            width: 14px; /* Width of the custom radio button */
+            height: 14px; /* Height of the custom radio button */
+            border-radius: 50%; /* Makes it circular */
+            border: 2px solid #007bff; /* Border color of the custom radio button */
+            background-color: #fff; /* Background color of the custom radio button */
+        }
+        
+        .radio-buttons-container input[type="radio"]:checked + label:before {
+            background-color: #007bff; /* Fill the custom radio button when selected */
+        }
+        fieldset {
+            border: 2px solid #007bff; /* Blue border for the fieldset */
+            border-radius: 8px; /* Rounded corners for the fieldset */
+            padding: 20px; /* Padding inside the fieldset */
+            margin: 20px 0; /* Margin around the fieldset for spacing */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        #loading {
+            display: none;
+        }
+        #unique-values-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .value-count {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .value-count:hover {
+            background-color: #dde2e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          
+          table, th, td {
+            border: 1px solid #ddd;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          
+          th {
+            background-color: #f2f2f2;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+          
+          #loading {
+            display: none;
+            color: #666;
+            margin-top: 10px;
+          }
+          
+          .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+          
+        .dropdown-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        #uploadForm {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 600px; /* Increased width */
+            margin: 20px;
+        }
+        #uploadForm fieldset {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #uploadForm input, #uploadForm button {
+            width: 100%;
+        }
+        .horizontal-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .horizontal-group > * {
+            flex: 1; /* Allows children to take equal width */
+            margin-right: 10px;
+        }
+        .horizontal-group > :last-child {
+            margin-right: 0;
+        }
+        #numMappings {
+            width: 50%; /* Smaller width for the number input */
+        }
+        .hidden {
+            display: none;
+        }
+        #uploadForm {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 600px; /* Adjust the width as needed */
+            margin: 20px;
+        }
+    
+        .dropdown-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+    
+        .dropdown-row select {
+            flex: 1; /* Each select takes equal space */
+            margin-right: 10px;
+        }
+    
+        .dropdown-row:last-child select {
+            margin-right: 0;
+        }
+    
+        #dropdownArea {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* Ensure full width within the form */
+        }
+    
+        input, select, button {
+            padding: 8px;
+            margin: 2px 0; /* Slight vertical spacing */
+            box-sizing: border-box; /* Border and padding included in width */
+            width: 100%; /* Full width to match the form’s width */
+        }
+        .dropdown-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .dropdown-row label {
+            flex: 0 0 30px; /* Fixed width for the label, adjust as needed */
+            padding-right: 10px; /* Space between label and first dropdown */
+        }
+
+        .dropdown-row select {
+            flex: 1; /* Flex-grow to take up remaining space */
+            margin: 0 5px; /* Margin for spacing between dropdowns */
+            padding: 8px;
+        }
+
+        #dropdownArea {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        input[type="number"], button {
+            padding: 8px;
+            margin-top: 5px;
+            width: 100%; /* Full width for standalone input and buttons */
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+        }
+        .tab {
+            overflow: hidden;
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab button, .tab a {
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 18px;
+            background-color: inherit;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tab button:hover, .tab a:hover {
+            color: #0567a6; /* Blue text */
+        }
+        
+        .tab button.active, .tab a.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+
+          
+        /* Loader Styling */
+        .loader-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #0567a6;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }

@@ -1,0 +1,151 @@
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: white;
+            padding-top: 60px; /* Space for the navbar */
+        }
+
+        /* Custom Navbar Styling */
+        .navbar-custom {
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-custom .navbar-nav {
+            justify-content: center; /* Center the menu items */
+            width: 100%; /* Ensure the nav items take full width for centering */
+        }
+
+        .navbar-custom .nav-item {
+            margin: 0 15px; /* Add spacing between nav links */
+        }
+
+        .navbar-custom .nav-link, .navbar-custom .dropdown-item {
+            color: white;
+            font-size: 20px;
+            padding: 16px 30px;
+            text-decoration: none;
+        }
+
+        .navbar-custom .nav-link:hover, .navbar-custom .dropdown-item:hover {
+            background-color: #FBD185; /* Golden */
+            color: #060606; /* Blue text */
+        }
+
+        .navbar-custom .nav-link.active, .navbar-custom .dropdown-item.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+
+        .navbar-custom .dropdown-menu {
+            background-color: #034d7a; /* Match navbar gradient */
+            border: none;
+        }
+
+        /* Sidebar styling */
+        .side-nav {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: -220px; /* Start offscreen */
+            height: 100%;
+            background-image: linear-gradient(to bottom, #0567a6, #034d7a); /* Blue gradient */
+            overflow-x: hidden;
+            padding-top: 60px; /* Height of the navbar */
+            transition: left 0.5s; /* Smooth sliding effect */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-nav button {
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: white;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid #034f84; /* Dark blue border for separation */
+        }
+
+        .side-nav button:last-child {
+            border-bottom: none; /* Remove border for the last button */
+        }
+
+        .side-nav button:hover {
+            background-color: #FBD185; /* Golden for hover */
+            color: #0567a6; /* Blue text */
+        }
+
+        .side-nav button.active {
+            background-color: #034f84; /* Darker blue for active */
+            color: white;
+        }
+
+        /* Content styling */
+        .content {
+            padding: 20px;
+            margin-left: 220px; /* Same as the sidebar width */
+            transition: margin-left 0.5s; /* Smooth transition for content margin */
+        }
+
+        .data {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hide each content block */
+            overflow-x: auto; /* Allows scrolling for wide tables */
+        }
+
+        /* Styling for tables within data divs */
+        .data table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .data th, .data td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data th {
+            background-color: #0567a6;
+            color: white;
+        }
+
+        .data tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .data tr:hover {
+            background-color: #ddd;
+        }
+
+        .data-length {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+            font-weight: bold;
+            border: 2px solid #007bff;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #0056b3;
+        }

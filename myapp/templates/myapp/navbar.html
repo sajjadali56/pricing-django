@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,6 +46,44 @@
             color: #FBD185; /* Golden text */
         }
         
+        /* Custom Navbar Styling */
+        .navbar-custom {
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-custom .navbar-nav {
+            justify-content: center; /* Center the menu items */
+            width: 100%; /* Ensure the nav items take full width for centering */
+        }
+
+        .navbar-custom .nav-item {
+            margin: 0 15px; /* Add spacing between nav links */
+        }
+
+        .navbar-custom .nav-link, .navbar-custom .dropdown-item {
+            color: white;
+            font-size: 20px;
+            padding: 16px 30px;
+            text-decoration: none;
+        }
+
+        .navbar-custom .nav-link:hover, .navbar-custom .dropdown-item:hover {
+            background-color: #FBD185; /* Golden */
+            color: #000000; /* Blue text */
+        }
+
+        .navbar-custom .nav-link.active, .navbar-custom .dropdown-item.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+
+        .navbar-custom .dropdown-menu {
+            background-color: #034d7a; /* Match navbar gradient */
+            border: none;
+        }
+
         /* Sidebar styling */
         .side-nav {
             width: 220px;
@@ -58,9 +97,9 @@
             transition: left 0.5s; /* Smooth sliding effect */
             box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
         }
-        
+
         .side-nav button {
-            padding: 12px 16px;
+            padding: 15px 20px;
             text-align: left;
             border: none;
             background: none;
@@ -68,16 +107,21 @@
             display: block;
             width: 100%;
             transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid #034f84; /* Dark blue border for separation */
         }
-        
+
+        .side-nav button:last-child {
+            border-bottom: none; /* Remove border for the last button */
+        }
+
         .side-nav button:hover {
-            background-color: #FBD185; /* Golden */
+            background-color: #FBD185; /* Golden for hover */
             color: #0567a6; /* Blue text */
         }
-        
+
         .side-nav button.active {
-            background-color: #034d7a; /* Darker shade */
-            color: #FBD185; /* Golden text */
+            background-color: #034f84; /* Darker blue for active */
+            color: white;
         }
         
         /* Content styling */
@@ -169,7 +213,7 @@
 
 </head>
 <body>
-    <div class="tab">
+    <!-- <div class="tab">
         <button class="tablinks" onclick="goBack()">HOME</button>
         <a href="#" class="tablinks" id="premium-checks-button">PREMIUM CHECKS</a>
         <a href="{% url 'display_results' %}" class="display-results">PREMIUM RESULTS</a>
@@ -183,7 +227,51 @@
         <a href="{% url 'Naming_Convention' %}" class="Naming_Convention">UAE NAMING</a>
         <a href="{% url 'upload_mapping' %}" class="upload_mapping">→</a>
         {% comment %} <a href="{% url 'combined_results' %}" class="fina;-button">VIEW COMBINED RESULTS</a> {% endcomment %}
-    </div>
+    </div> -->
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link tablinks" href="/">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link tablinks" id="premium-checks-button">CLAIM CHECKS</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="UploadsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            UPLOADS
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="UploadsDropdown">
+                            <li><a href="{% url 'upload_and_display' %}" class="dropdown-item upload">Upload Premium Files</a></li>
+                            <li><a href="{% url 'claims_file_upload' %}" class="dropdown-item claims-button">Upload Claims Files</a></li>
+                            <li><a href="{% url 'os_file_upload' %}" class="dropdown-item claims-button">Upload OS Files</a></li>
+                            <li><a href="{% url 'upload_mapping' %}" class="dropdown-item upload_mapping">Mapping Section</a></li>
+                            <li><a href="{% url 'mapping_upload' %}" class="dropdown-item mapping_upload">UPLOAD MAPPING</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="ResultsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            RESULTS
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ResultsDropdown">
+                            <li><a href="{% url 'display_results' %}" class="dropdown-item display-results">Premium Results</a></li>
+                            <li><a href="{% url 'display_claims_results' %}" class="dropdown-item display-claims-results">Claims Results</a></li>
+                            <li><a href="{% url 'display_os_results' %}" class="dropdown-item display-os-results">OS Results</a></li>
+                            <li><a href="{% url 'Naming_Convention' %}" class="dropdown-item Naming_Convention">UAE Naming</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'os_file_upload' %}" class="nav-link claims-button">→</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <br>
     <br>
     
@@ -399,6 +487,10 @@
         </div>
     </div>
 
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Set initial state

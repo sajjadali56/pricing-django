@@ -3,312 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OS File Upload</title>
+    <title>Upload OS Data Files</title>
     {% load static %}
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-        }
-        form {
-            margin: 20px 0;
-            width: 100%;
-            max-width: 600px; /* Adjust as needed */
-            background-color: #FFFFFF; /* White background for forms */
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
-        }
-
-        header {
-            width: 100%;
-            height: 100px; /* Adjust based on your logo size */
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Logo on one side, name on the other */
-            padding: 0 20px; /* Padding on the sides */
-            background-color: #fff; /* Adjust background color as needed */
-            {% comment %} box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */ {% endcomment %}
-        }
-        .logo {
-            height: 280px; /* Adjust based on your logo size */
-            background-image: url('{% static "badri.png" %}');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 280px; /* Ensure this is equal to height for a square logo */
-        }
-        h1, h2 {
-            color: #0044CC; /* Blue color for headers */
-            border-bottom: 1px solid #FFD700; /* Yellow border */
-            padding-bottom: 10px;
-            text-align: center;
-        }
-        form {
-            margin: 20px 0;
-            width: 100%;
-            max-width: 600px; /* Adjust as needed */
-            background-color: #FFFFFF; /* White background for forms */
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
-        }
-        .form-errors {
-            color: red;
-            margin: 10px 0;
-        }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-        }
-        select, input[type="text"], input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-         button {
-            background-color: #007BFF; /* Blue background for buttons */
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: block;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #3d5ba9;
-        }
-        fieldset {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        legend {
-            padding: 0 5px;
-            font-weight: bold;
-        }
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-        input[type="file"] {
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 100%;
-            box-sizing: border-box;
-            cursor: pointer;
-            background-color: #fff;
-            text-align: left;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'os_page.css' %}">
     
-        input[type="file"]::file-selector-button {
-            color: #FFF;
-            background-color: #E8A317; /* Blue background */
-            border: none;
-            padding: 10px;
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-    
-        input[type="file"]::file-selector-button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-        }
-        .uploaded-files-info {
-            font-family: Arial, sans-serif;
-            border: 2px solid #4A90E2; /* a soft blue border */
-            border-radius: 5px;
-            padding: 10px 20px;
-            margin: 20px 0;
-            background-color: #E8F0FE; /* a very light blue background */
-        }
-        
-        .uploaded-files-info legend {
-            padding: 0 10px;
-            color: #333;
-            font-weight: bold;
-            background-color: #E8F0FE; /* matching the fieldset background */
-            border-bottom: 1px solid #4A90E2; /* a line under the legend for visual separation */
-        }
-        
-        .uploaded-files-info p {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        
-        .uploaded-files-info ul {
-            list-style: none;
-            padding-left: 20px; /* Indent the list a bit */
-            margin-top: 0;
-        }
-        
-        .uploaded-files-info ul li {
-            background-color: #FFFFFF; /* white background for list items */
-            padding: 5px 10px;
-            margin-bottom: 5px;
-            border-radius: 3px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
-            transition: background-color 0.3s; /* smooth transition for hover effect */
-            font-size: 0.9em;
-        }
-        
-        .uploaded-files-info ul li:hover {
-            background-color: #DDEFFF; /* a slightly different blue on hover */
-        }
-        #twoColumnsSection {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background: #f9f9f9;
-        }
-        
-        #search_input_two_columns {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #007bff;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        /* Selected Values Styling - Adjusted sizes and hover color */
-        #selected_values_container_two_columns {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px; /* Reduced gap */
-            margin-top: 10px;
-        }
-        
-        .selected-value {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 8px; /* Reduced padding for smaller size */
-            background-color: #007bff;
-            color: #ffffff;
-            border-radius: 15px; /* Adjusted for smaller size */
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 14px; /* Reduced font size */
-        }
-        
-        .selected-value:hover {
-            background-color: #ff0000; /* Changed hover background color to red */
-        }
-        
-        /* Loading Indicator */
-        #loading_two_columns {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        
-        /* General enhancements */
-        datalist {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px;
-        }
-        
-        option {
-            padding: 8px;
-            cursor: pointer;
-        }
-        
-        input[list]::-webkit-calendar-picker-indicator {
-            display: none;
-        }
-        .tab {
-            overflow: hidden;
-            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
-            border-bottom: 3px solid #FBD185; /* Golden */
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        
-        .tab button, .tab a {
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 16px 20px;
-            font-size: 18px;
-            background-color: inherit;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .tab button:hover, .tab a:hover {
-            background-color: #FBD185; /* Golden */
-            color: #0567a6; /* Blue text */
-        }
-        
-        .tab button.active, .tab a.active {
-            background-color: #034d7a; /* Darker shade */
-            color: #FBD185; /* Golden text */
-        }
-        .radio-container {
-            display: flex; /* Aligns the items (labels and radio buttons) in a row */
-            align-items: center; /* Centers the items vertically */
-            gap: 15px; /* Creates space between each label */
-        }
-    </style>
 </head>
 
 <body>
-    <div class="tab">
+    <!-- <div class="tab">
         <a href="{% url 'display_results' %}" class="display-results">PREMIUM RESULTS</a>
         <a href="{% url 'display_claims_results' %}" class="display-claims-results">CLAIMS RESULTS</a>
         <a href="{% url 'display_os_results' %}" class="display-os-results">OS RESULTS</a>
         <a href="{% url 'upload_and_display' %}" class="upload">UPLOAD PREMIUM FILES</a>
         <a href="{% url 'claims_file_upload' %}" class="claims-button">UPLOAD CLAIMS FILES</a>
         <a href="{% url 'os_file_upload' %}" class="claims-button">UPLOAD OS FILES</a>
-        
-    </div>
-  
-    
-    {% comment %}  {% endcomment %}
-
-    <a href="{% url 'os_file_upload' %}" class="os-button">OS Files Upload</a>
-    <div class="tab">
-        <a href="{% url 'display_results' %}" class="display-results">PREMIUM RESULTS</a>
-        <a href="{% url 'display_claims_results' %}" class="display-claims-results">CLAIMS RESULTS</a>
-        <a href="{% url 'display_os_results' %}" class="display-os-results">OS RESULTS</a>
-        <a href="{% url 'upload_and_display' %}" class="upload">PREMIUM FILES UPLOAD</a>
-        <a href="{% url 'claims_file_upload' %}" class="claims-button">UPLOAD CLAIMS FILES</a>
-        <a href="{% url 'os_file_upload' %}" class="claims-button">UPLOAD OS FILES</a>
         <a href="{% url 'upload_mapping' %}" class="upload_mapping">MAPPING SECTION</a>
         <a href="{% url 'mapping_upload' %}" class="mapping_upload">UPLOAD MAPPING</a>
         <a href="{% url 'Naming_Convention' %}" class="Naming_Convention">UAE NAMING</a>
         <a href="{% url 'display_os_results' %}" class="display-os-results">→</a>
-    </div>
-    <header>
-        <div class="logo"></div>
-    </header>
-    <h1>OS File Upload</h1>
+    </div> -->
+    {% include 'myapp/navbar2.html' %}
+    
+    <h1 class="pt-5 mt-5">Upload OS Data Files</h1>
     {% if message %}
         <p>{{ message }}</p>
     {% endif %}
@@ -337,7 +55,6 @@
             </ul>
         </fieldset>
         
-        
         <fieldset>
             <legend>Is ClaimID available?</legend>
             <div class="radio-container">
@@ -352,188 +69,160 @@
             </div>
         </fieldset>
 
+        <br>
+        <div id="conditionalFields" style="display: none;">
+            <label>ClaimID:
+                <select name="CLAIMID">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+            </label>
             <br>
-            <div id="conditionalFields" style="display: none;">
-                <label>ClaimID:
-                    <select name="CLAIMID">
-                        {% for column in columns %}
-                            <option value="{{ column }}">{{ column }}</option>
-                        {% endfor %}
-                    </select>
-                </label>
-                <br>
-                <!-- Include any additional fields here that are relevant when ClaimID is available -->
-            </div>
+        </div>
     
-                <p>UID SELECTION</p>
-                <div class="radio-container">
-                <label><input type="radio" name="selection" value="yes" onclick="toggleDisplay(true)"> Yes</label>
-                <label><input type="radio" name="selection" value="no" onclick="toggleDisplay(false)"> No</label>
-                </div>
+        <p>UID SELECTION</p>
+        <div class="radio-container">
+            <label><input type="radio" name="selection" value="yes" onclick="toggleDisplay(true)"> Yes</label>
+            <label><input type="radio" name="selection" value="no" onclick="toggleDisplay(false)"> No</label>
+        </div>
 
-                <!-- Section for UID selection, initially hidden -->
-                <div id="uidSection" style="display: none;">
-                    <p>UID:</p>
-                    <select name="UID">
-                        <!-- Dynamically generated options from the server -->
-                        {% for column in columns %}
-                            <option value="{{ column }}">{{ column }}</option>
-                        {% endfor %}
-                    </select>
-                    <br>
-                </div>
+        <div id="uidSection" style="display: none;">
+            <p>UID:</p>
+            <select name="UID">
+                {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+            <br>
+        </div>
 
-                <!-- Section for selecting two columns, initially hidden -->
-                <div id="twoColumnsSection" style="display: none;">
-                    <p>SELECT COLUMNS FOR UID:</p>
-                    <input type="text" id="search_input_two_columns" list="unique_values_datalist_two_columns" placeholder="Search and select a value...">
-                    <datalist id="unique_values_datalist_two_columns">
-                        <!-- Options will be dynamically added by JavaScript -->
-                    </datalist>
+        <div id="twoColumnsSection" style="display: none;">
+            <p>SELECT COLUMNS FOR UID:</p>
+            <input type="text" id="search_input_two_columns" list="unique_values_datalist_two_columns" placeholder="Search and select a value...">
+            <datalist id="unique_values_datalist_two_columns"></datalist>
+            <div id="selected_values_container_two_columns"></div>
+            <div id="loading_two_columns" style="display: none;">Loading...</div>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        </div>
 
-                    <!-- Container for selected values -->
-                    <div id="selected_values_container_two_columns"></div>
+        <br>
+        LOSS DATE:
+        <select name="LOSS_DATE">
+            {% for column in columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        CLAIM TYPE:
+        <select name="CLAIM_TYPE">
+            {% for column in columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        OS AMOUNT 1:
+        <select name="CLAIM_AMOUNT1">
+            {% for column in columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        OPERATOR:
+        <select name="OPERATOR1">
+            <option value="+">+</option>
+            <option value="-">-</option>
+        </select>
+        <br>
+        OS AMOUNT 2:
+        <select name="CLAIM_AMOUNT2">
+            {% for column in columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        AsAtDate Is Available?
+        <br>
+        <div class="radio-container">
+            <label><input type="radio" name="showSection" value="yes" onclick="toggleSectionDisplay()"> Yes</label>
+            <label><input type="radio" name="showSection" value="no" onclick="toggleSectionDisplay()" checked> No</label>
+        </div>
+        
+        <div id="toggleSection" style="display: none;">
+            AsAtDate:
+            <select name="AsAtDate" id="AsAtDateSelect">
+                <option value="">Select a column</option>
+                {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" id="search_input" list="unique_values_datalist" name="selected_value" placeholder="Search and select a value...">
+            <datalist id="unique_values_datalist"></datalist>
+            <input type="hidden" name="selected_column" id="selected_column">
+        </div>
+        
+        <label for="date_separator">Choose a date separator:</label>
+        <select id="date_separator" name="date_separator" onchange="updateDateFormats();">
+            <option value="-">Dash (-)</option>
+            <option value="/">Slash (/)</option>
+        </select>
 
-                    <!-- A hidden div for showing a loading indicator (optional) -->
-                    <div id="loading_two_columns" style="display: none;">Loading...</div>
-
-                    <!-- Include CSRF token in the template for POST requests -->
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                </div>
-
-               <br>
-                LOSS DATE:
-                <select name="LOSS_DATE">
-                    {% for column in columns %}
-                        <option value="{{ column }}">{{ column }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                CLAIM TYPE:
-                <select name="CLAIM_TYPE">
-                    {% for column in columns %}
-                        <option value="{{ column }}">{{ column }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                OS AMOUNT 1:
-                <select name="CLAIM_AMOUNT1">
-                    {% for column in columns %}
-                        <option value="{{ column }}">{{ column }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                OPERATOR:
-                <select name="OPERATOR1">
-                        {% comment %} <option value="None" selected>{{'None'}}</option> {% endcomment %}
-                        <option value="+">{{'+'}}</option>
-                        <option value="-">{{'-'}}</option>
-                </select>
-                <br>
-                OS AMOUNT 2:
-                <select name="CLAIM_AMOUNT2">
-                    {% comment %} <option value="None" selected>{{'None'}}</option> {% endcomment %}
-                    {% for column in columns %}
-                        <option value="{{ column }}">{{ column }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                <br>
-                {% comment %} OS AMOUNT:
-                <select name="CLAIM_AMOUNT">
-                    {% for column in columns %}
-                        <option value="{{ column }}">{{ column }}</option>
-                    {% endfor %}
-                </select> {% endcomment %}
-                AsAtDate Is Available?
-                <br>
-                <div class="radio-container">
-                <label><input type="radio" name="showSection" value="yes" onclick="toggleSectionDisplay()"> Yes</label>
-                <label><input type="radio" name="showSection" value="no" onclick="toggleSectionDisplay()" checked> No</label>
-                </div>
-                
-                <div id="toggleSection" style="display: none;"> <!-- Initially hidden -->
-                    AsAtDate:
-                    <select name="AsAtDate" id="AsAtDateSelect">
-                        <option value="">Select a column</option>
-                        {% for column in columns %}
-                            <option value="{{ column }}">{{ column }}</option>
-                        {% endfor %}
-                    </select>
-                    
-                    <input type="text" id="search_input" list="unique_values_datalist" name="selected_value" placeholder="Search and select a value...">
-                    <datalist id="unique_values_datalist"></datalist>
-                    <input type="hidden" name="selected_column" id="selected_column">
-                </div>
-                
-                <!-- More dropdowns for 'No' selection -->
-                <label for="date_separator">Choose a date separator:</label>
-                <select id="date_separator" name="date_separator" onchange="updateDateFormats();">
-                    <option value="-">Dash (-)</option>
-                    <option value="/">Slash (/)</option>
-                </select>
-
-                <!-- HTML for selecting date format -->
-                <label for="date_format">Choose a date format:</label>
-                <select id="date_format" name="date_format">
-                    <!-- Options will be populated by JavaScript -->
-                </select>
-            <button type="submit" id="processDataButton" name="submit_type" value="process_data">Process Data</button>
+        <label for="date_format">Choose a date format:</label>
+        <select id="date_format" name="date_format"></select>
+        <button type="submit" id="processDataButton" name="submit_type" value="process_data">Process Data</button>
         {% endif %}
     </form>
+
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
 
     {% if data_processed %}
         <p>Data has been processed successfully!</p>
         <a href="{% url 'download_processed_data' %}">Download Processed Data</a>
     {% endif %}
 
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    
     <script>
+        // Show loader on form submission
+        document.getElementById('claimsForm').addEventListener('submit', function() {
+            document.getElementById('loader').style.display = 'flex';
+        });
+
+        // Hide loader on page load
+        window.addEventListener('load', function() {
+            document.getElementById('loader').style.display = 'none';
+        });
+
         function toggleClaimIdFields(isAvailable) {
-            // Show or hide the conditional fields based on ClaimID availability
             document.getElementById('conditionalFields').style.display = isAvailable ? 'block' : 'none';
         }
         
         function toggleSectionDisplay() {
-            // Get the value of the selected radio button
             var showSection = document.querySelector('input[name="showSection"]:checked').value;
-            console.log("value is",showSection)
-            
-            // Get the div that contains the AsAtDate select and the other form elements
             var sectionToToggle = document.getElementById('toggleSection');
-            
-            // Show or hide the entire section based on the radio button selection
-            if(showSection === 'yes') {
-                console.log("Yes is selected")
-                sectionToToggle.style.display = 'block';
-            } else {
-                console.log("No is selected")
-                sectionToToggle.style.display = 'none';
-            }
+            sectionToToggle.style.display = showSection === 'yes' ? 'block' : 'none';
         }
         
         function toggleDisplay(isYesSelected) {
-            // Display the UID dropdown if "Yes" is selected
             document.getElementById('uidSection').style.display = isYesSelected ? 'block' : 'none';
-            // Display the two columns selection if "No" is selected
             document.getElementById('twoColumnsSection').style.display = isYesSelected ? 'none' : 'block';
         }
+
         function fetchColumnData() {
             const loadingElement = document.getElementById('loading_two_columns');
             const dataList = document.getElementById('unique_values_datalist_two_columns');
-        
-            // Show loading message
             loadingElement.style.display = 'block';
-        
-            // Fetch the unique values from the server
-            fetch(`/myapp/get_columns/`) // The URL to your Django view that returns column values
+            fetch(`/myapp/get_columns/`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+                    if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
                 })
                 .then(data => {
-                    // Populate the datalist with the column data
                     dataList.innerHTML = "";
                     data.columns.forEach(value => {
                         let option = document.createElement("option");
@@ -541,30 +230,19 @@
                         dataList.appendChild(option);
                     });
                 })
-                .catch(error => {
-                    console.error("Error fetching column data:", error);
-                })
-                .finally(() => {
-                    // Hide loading message
-                    loadingElement.style.display = 'none';
-                });
+                .catch(error => console.error("Error fetching column data:", error))
+                .finally(() => loadingElement.style.display = 'none');
         }
         
-        // Function to handle the update of selected values
         document.addEventListener("DOMContentLoaded", function() {
-            fetchColumnData(); // Assuming this function populates the datalist options
-        
+            fetchColumnData();
             const searchInput = document.getElementById("search_input_two_columns");
             const dataList = document.getElementById("unique_values_datalist_two_columns");
             const selectedValuesContainer = document.getElementById("selected_values_container_two_columns");
         
             searchInput.addEventListener("input", function(event) {
                 let inputValue = event.target.value.trim();
-        
-                // Check if the inputValue matches any of the datalist options
                 let isOptionMatch = Array.from(dataList.options).some(option => option.value === inputValue);
-        
-                // Only add if it's a matching option and not already selected
                 if (inputValue && isOptionMatch && !document.querySelector(`[data-value="${inputValue}"]`)) {
                     let div = document.createElement("div");
                     div.setAttribute("class", "selected-value");
@@ -572,11 +250,11 @@
                     div.textContent = inputValue + " (Click to remove)";
                     div.addEventListener("click", function() {
                         this.remove();
-                        updateSelectedValues(); // Update selected values after removal
+                        updateSelectedValues();
                     });
                     selectedValuesContainer.appendChild(div);
-                    updateSelectedValues(); // Update selected values after adding a new item
-                    searchInput.value = ""; // Clear the input for a new selection
+                    updateSelectedValues();
+                    searchInput.value = "";
                 }
             });
         });
@@ -584,9 +262,7 @@
         function updateSelectedValues() {
             let selectedDivs = document.querySelectorAll("#selected_values_container_two_columns .selected-value");
             let selectedValues = Array.from(selectedDivs).map(div => div.getAttribute("data-value"));
-            console.log("Selected Values:", selectedValues);
-            // Additional code to handle the selected values can be added here
-            fetch(`/myapp/handle_selected_values/`, { // Update this URL
+            fetch(`/myapp/handle_selected_values/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -595,59 +271,36 @@
                 body: JSON.stringify({ 'selectedValues': selectedValues })
             })
             .then(response => response.json())
-            .then(data => {
-                console.log(data); // Handle response data from the server
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
         }
+
         document.addEventListener("DOMContentLoaded", function() {
             const asAtDateSelect = document.getElementById('AsAtDateSelect');
-        
             asAtDateSelect.addEventListener('change', function() {
                 const selectedColumn = this.value;
-                console.log("Selected Column:", selectedColumn);
-
-        
-                if(selectedColumn) {
-                    console.log("Hello")
+                if (selectedColumn) {
                     fetch(`/myapp/get_unique_values/?column=${encodeURIComponent(selectedColumn)}`)
                         .then(response => response.json())
                         .then(data => {
-                            console.log("Response data for unique:", data);
                             const dataList = document.querySelector("#unique_values_datalist");
-                            dataList.innerHTML = ""; // Clear existing options
-        
+                            dataList.innerHTML = "";
                             data.unique_values.forEach(value => {
                                 const option = document.createElement("option");
                                 option.value = value;
                                 dataList.appendChild(option);
                             });
-        
-                            console.log("Unique values fetched for column:", selectedColumn);
                         })
                         .catch(error => console.error("Error fetching unique values:", error));
                 } else {
-                    console.log("No column selected.");
                     document.querySelector("#unique_values_datalist").innerHTML = "";
                 }
             });
         });
 
-        function toggleDisplay(isYesSelected) {
-            // Display the UID dropdown if "Yes" is selected
-            document.getElementById('uidSection').style.display = isYesSelected ? 'block' : 'none';
-            // Display the two columns selection if "No" is selected
-            document.getElementById('twoColumnsSection').style.display = isYesSelected ? 'none' : 'block';
-        }
-    
-        // Function to add selected values from the datalist
         document.addEventListener("DOMContentLoaded", function() {
-            // Function to add selected values from the datalist
             document.getElementById("search_input").addEventListener("change", function() {
                 let selectedValue = this.value;
-                // Only add if it's not already selected
                 if (!document.querySelector(`[data-value="${selectedValue}"]`)) {
                     let div = document.createElement("div");
                     div.setAttribute("data-value", selectedValue);
@@ -657,73 +310,49 @@
                     };
                     document.getElementById("selected_values_container").appendChild(div);
                 }
-                this.value = ""; // Clear the input
+                this.value = "";
             });
         });
-        // Call this function when you need to clear the inner HTML of the div
-        
-        // Show or hide fields based on claimId radio selection
+
         document.getElementById('claimIdYes').addEventListener('change', function() {
-            document.getElementById('fieldsForYes').style.display = 'block';
-            document.getElementById('fieldsForNo').style.display = 'none';
-            
+            document.getElementById('conditionalFields').style.display = 'block';
         });
 
         document.getElementById('claimIdNo').addEventListener('change', function() {
-            document.getElementById('fieldsForYes').style.display = 'none';
-            document.getElementById('fieldsForNo').style.display = 'block';
-            
+            document.getElementById('conditionalFields').style.display = 'none';
         });
 
-        // Change the form action when the 'Process Data' button is clicked
         document.getElementById('processDataButton').addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent the default form submit
+            event.preventDefault();
             var form = document.getElementById('claimsForm');
             form.action = "{% url 'process_os_data' %}";
             form.submit();
         });
+
         function updateDateFormats() {
-            // Assuming you have only one set of date format and separator
             var separator = document.getElementById('date_separator').value;
             var dateFormatSelect = document.getElementById('date_format');
-            dateFormatSelect.innerHTML = ''; // Clear existing options
-            
+            dateFormatSelect.innerHTML = '';
             var formats = [
-                    'dd' + separator + 'mm' + separator + 'yy',
-                    'mm' + separator + 'dd' + separator + 'yy',
-                    'dd' + separator + 'mm' + separator + 'yyyy',
-                    'mm' + separator + 'dd' + separator + 'yyyy',
-                    'yy' + separator + 'mm' + separator + 'dd',
-                    'yyyy' + separator + 'mm' + separator + 'dd'
-                ];
-            
-            // Populate the date_format select with options based on the chosen separator
+                'dd' + separator + 'mm' + separator + 'yy',
+                'mm' + separator + 'dd' + separator + 'yy',
+                'dd' + separator + 'mm' + separator + 'yyyy',
+                'mm' + separator + 'dd' + separator + 'yyyy',
+                'yy' + separator + 'mm' + separator + 'dd',
+                'yyyy' + separator + 'mm' + separator + 'dd'
+            ];
             formats.forEach(function(format) {
                 var option = document.createElement('option');
                 option.value = format;
-                option.text = format;
                 option.text = format.toUpperCase();
                 dateFormatSelect.appendChild(option);
             });
         }
         
-        // Call updateDateFormats when the page loads and whenever the date separator changes
         document.addEventListener("DOMContentLoaded", function() {
-            updateDateFormats(); // Call initially to populate with default values
+            updateDateFormats();
             document.getElementById('date_separator').addEventListener('change', updateDateFormats);
         });
-        
-        window.onload = function() {
-            updateDateFormats();
-            // Any other page initialization code
-        };
-        
-        
-
     </script>
 </body>
-
-
-
-
 </html>

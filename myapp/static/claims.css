@@ -1,0 +1,348 @@
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        form {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+
+        header {
+            width: 100%;
+            height: 100px; /* Adjust based on your logo size */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Logo on one side, name on the other */
+            padding: 0 20px; /* Padding on the sides */
+            background-color: #fff; /* Adjust background color as needed */
+        }
+
+        /* Custom Navbar Styling */
+        .navbar-custom {
+            background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+            border-bottom: 3px solid #FBD185; /* Golden */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-custom .navbar-nav {
+            justify-content: center; /* Center the menu items */
+            width: 100%; /* Ensure the nav items take full width for centering */
+        }
+
+        .navbar-custom .nav-item {
+            margin: 0 15px; /* Add spacing between nav links */
+        }
+
+        .navbar-custom .nav-link, .navbar-custom .dropdown-item {
+            color: white;
+            font-size: 20px;
+            padding: 16px 30px;
+            text-decoration: none;
+        }
+
+        .navbar-custom .nav-link:hover, .navbar-custom .dropdown-item:hover {
+            background-color: #FBD185; /* Golden */
+            color: #0567a6; /* Blue text */
+        }
+
+        .navbar-custom .nav-link.active, .navbar-custom .dropdown-item.active {
+            background-color: #034d7a; /* Darker shade */
+            color: #FBD185; /* Golden text */
+        }
+
+        .navbar-custom .dropdown-menu {
+            background-color: #034d7a; /* Match navbar gradient */
+            border: none;
+        }
+
+        /* Sidebar styling */
+        .side-nav {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: -220px; /* Start offscreen */
+            height: 100%;
+            background-image: linear-gradient(to bottom, #0567a6, #034d7a); /* Blue gradient */
+            overflow-x: hidden;
+            padding-top: 60px; /* Height of the navbar */
+            transition: left 0.5s; /* Smooth sliding effect */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-nav button {
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: white;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid #034f84; /* Dark blue border for separation */
+        }
+
+        .side-nav button:last-child {
+            border-bottom: none; /* Remove border for the last button */
+        }
+
+        .side-nav button:hover {
+            background-color: #FBD185; /* Golden for hover */
+            color: #0567a6; /* Blue text */
+        }
+
+        .side-nav button.active {
+            background-color: #034f84; /* Darker blue for active */
+            color: white;
+        }
+
+        .logo {
+            height: 280px; /* Adjust based on your logo size */
+            background-image: url('{% static "badri.png" %}');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 280px; /* Ensure this is equal to height for a square logo */
+        }
+        h1, h2 {
+            color: #0044CC; /* Blue color for headers */
+            border-bottom: 1px solid #FFD700; /* Yellow border */
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        form {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            background-color: #FFFFFF; /* White background for forms */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+        }
+        .form-errors {
+            color: red;
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        select, input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+         button {
+            background-color: #007BFF; /* Blue background for buttons */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #3d5ba9;
+        }
+        fieldset {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        legend {
+            padding: 0 5px;
+            font-weight: bold;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+            background-color: #fff;
+            text-align: left;
+        }
+    
+        input[type="file"]::file-selector-button {
+            color: #FFF;
+            background-color: #E8A317; /* Blue background */
+            border: none;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+    
+        input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .uploaded-files-info {
+            font-family: Arial, sans-serif;
+            border: 2px solid #4A90E2; /* a soft blue border */
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #E8F0FE; /* a very light blue background */
+        }
+        
+        .uploaded-files-info legend {
+            padding: 0 10px;
+            color: #333;
+            font-weight: bold;
+            background-color: #E8F0FE; /* matching the fieldset background */
+            border-bottom: 1px solid #4A90E2; /* a line under the legend for visual separation */
+        }
+        
+        .uploaded-files-info p {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .uploaded-files-info ul {
+            list-style: none;
+            padding-left: 20px; /* Indent the list a bit */
+            margin-top: 0;
+        }
+        
+        .uploaded-files-info ul li {
+            background-color: #FFFFFF; /* white background for list items */
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+            transition: background-color 0.3s; /* smooth transition for hover effect */
+            font-size: 0.9em;
+        }
+        
+        .uploaded-files-info ul li:hover {
+            background-color: #DDEFFF; /* a slightly different blue on hover */
+        }
+        #twoColumnsSection {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: #f9f9f9;
+}
+
+#search_input_two_columns {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Selected Values Styling - Adjusted sizes and hover color */
+#selected_values_container_two_columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Reduced gap */
+    margin-top: 10px;
+}
+
+.selected-value {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px; /* Reduced padding for smaller size */
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 15px; /* Adjusted for smaller size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px; /* Reduced font size */
+}
+
+.selected-value:hover {
+    background-color: #ff0000; /* Changed hover background color to red */
+}
+
+/* Loading Indicator */
+#loading_two_columns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* General enhancements */
+datalist {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+option {
+    padding: 8px;
+    cursor: pointer;
+}
+
+input[list]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+        
+.tab {
+    overflow: hidden;
+    background-image: linear-gradient(to right, #0567a6, #034d7a); /* Blue gradient */
+    border-bottom: 3px solid #FBD185; /* Golden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tab button, .tab a {
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 16px 20px;
+    font-size: 18px;
+    background-color: inherit;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.tab button:hover, .tab a:hover {
+    background-color: #FBD185; /* Golden */
+    color: #0567a6; /* Blue text */
+}
+
+.tab button.active, .tab a.active {
+    background-color: #034d7a; /* Darker shade */
+    color: #FBD185; /* Golden text */
+}
+.radio-container {
+    display: flex; /* Aligns the items (labels and radio buttons) in a row */
+    align-items: center; /* Centers the items vertically */
+    gap: 15px; /* Creates space between each label */
+}
